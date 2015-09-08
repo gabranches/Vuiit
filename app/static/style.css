@@ -1,0 +1,132 @@
+body { 
+	padding-top: 65px; 
+background-color: black;
+}
+
+a:hover{
+text-decoration:none;
+}
+
+.picbox{
+	height:200px;
+	border: 0;
+	padding:0;
+	cursor:pointer;
+	border:1px solid black;
+}
+
+.picbox2{
+	height:200px;
+	border: 0;
+	padding:0;
+	cursor:pointer;
+	border:1px solid black;
+}
+
+.infobox {
+	display:none;
+	opacity: .95;
+	width: 100%;
+		padding: 10px;
+	position: absolute;
+	bottom: 0;
+	background-color:black;
+	color:white;
+}
+
+.infobox-nojs {
+
+	opacity: .95;
+	background-color: black;
+	width: 100%;
+	height:100%;
+	padding: 5px 25px;
+	position: absolute;
+	bottom: 0;
+	border: 0;
+	color:white;
+}
+
+.picbox img{
+	width:100%;
+	height:100%;
+	border:0 none;
+}
+
+.picbox2 img{
+	width:100%;
+	height:100%;
+	border:0 none;
+}
+
+.navbar{
+	background-color:black;
+}
+
+.navbar-fixed-top{
+	padding:10px;
+}
+
+#bottombar{
+	padding:10px;
+}
+
+#main{
+	padding:0;
+}
+
+.row{
+	border:0;
+}
+
+.subreddit a{
+	color:rgb(176, 79, 216);
+}
+
+.subreddit a:hover{
+	color: rgb(137, 57, 169);
+}
+
+.commentlink{
+	margin-left:5px;
+	color:white;
+}
+
+
+.upscomments a:hover{
+	color:silver;
+}
+
+
+.glyphicon-comment{
+	color:white;
+	margin-left:5px;
+}
+
+.navbar-fixed-bottom{
+	color: #428bca;
+	font-size:12px;
+}
+
+#main{
+	color:white;
+}
+
+.glyphicon-home{
+	color:white;
+	vertical-align: middle;
+}
+
+#form-sub > div{
+	padding-top:5px;
+	padding-bottom:5px;
+}
+
+
+#load-div{
+	color:white;
+}
+
+.navbar{
+	min-height:0;
+}
