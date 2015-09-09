@@ -1,5 +1,11 @@
 // ----  Functions ---- //
 
+function resize(){
+	var height = $(window).height();
+	$("#left-menu").css("height", height + "px");
+	$("#gallery").css("height", height + "px");
+}
+
 function refreshSub(sub, sort){
 	count = 0;
 	after = null;
@@ -17,21 +23,15 @@ function clearCols(){
 function addSub(sub){
 	if (subs.indexOf(sub) == -1){
 		subs.push(sub);
-		refreshSub(subs.join('+'), sort);
 		addToSubList(sub);
+		createCookie('subsCookie', subs.join(','));
 	}
-	$("#input-sub").val('');
-	$("#input-sub").attr("placeholder","Enter a Subreddit");
 }
 
 function removeSub(sub){
 	var index = subs.indexOf(sub);
 	subs.splice(index,1);
-	if (subs.length == 0){
-		refreshSub(null, sort);
-	} else {
-		refreshSub(subs.join('+'), sort);
-	}
+	createCookie('subsCookie', subs.join(','));
 }
 
 function addToSubList(sub){

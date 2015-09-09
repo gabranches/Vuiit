@@ -5,16 +5,14 @@ $("#input-sub").focus(function() {
 	$(this).attr("placeholder","");
 });
 
-// Subreddit  submit on focus out
-$("#input-sub").submit(function(e) { 	
-	addSub($("#input-sub").val());
-});
-
 // Add subreddit on enter
 $("#input-sub").keypress(function (e) {
-  if (e.which == 13) {
-    addSub($("#input-sub").val());
-  }
+	if (e.which == 13) {
+		addSub($("#input-sub").val());
+		refreshSub(subs.join('+'), sort);
+		$("#input-sub").val('');
+		$("#input-sub").attr("placeholder","Enter a Subreddit");
+	}
 });
 
 // Dropdown submit
@@ -28,6 +26,11 @@ $(document).on("click", ".sub", function(){
 	console.log('click');
 	removeSub($(this).attr('sub-id'));
 	$(this).remove();
+	if (subs.length == 0){
+		refreshSub(null, sort);
+	} else {
+		refreshSub(subs.join('+'), sort);
+	}
 });
 
 // Dropdown submit
@@ -47,8 +50,8 @@ $(document).on("mouseleave", ".picbox", function(){
 });
 
 // Page scroller
-$(window).scroll(function () {		
-   if ($(window).scrollTop() >= $(document).height() - $(window).height() - 10) {	
+$("#gallery").scroll(function () {		
+   if ($("#gallery").scrollTop() >= $("#col-1").height() - $("#gallery").height()) {	
 		getItems(sub, sort);
    }
 });
@@ -56,4 +59,8 @@ $(window).scroll(function () {
 // Make picbox div a link
 $(document).on("click", ".picbox", function(){ 		
   window.open = $(this).find("#extlink").attr("href"); 
+});
+
+$(window).resize(function(){
+	resize();
 });

@@ -15,59 +15,43 @@
 
 	<body>
 
-		<!-- Nav -->
-		<nav style="display:none;" class="row-fluid navbar navbar-fixed-top" role="navigation">
-
-			<div class="container">
-
-				<div class="row">
-					
-					<form id="form-sub" role="form">
-						<div class="col-xs-2 col-md-1 homelink">
-							<a href="/"><span class="glyphicon glyphicon-home"></span></a>
-						</div>
-
-						<div class="col-xs-2 col-md-1">
-							<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
-						</div>
-						<div class="col-xs-4 col-md-2">
-							<select id="select-sort" class="form-control">
-							    <option selected="selected" value="hot">hot</option>
-							    <option value="new">new</option>
-							    <option value="day">top today</option>
-							    <option value="week">top this week</option>
-							    <option value="month">top this month</option>
-							    <option value="year">top this year</option>]
-							    <option value="all">top all time</option>
-							</select>
-						</div>
-					</form>
-					<div class="col-xs-0 col-md-2"></div>
-				</div>
-			</div>
-		</nav>
-
 		<!-- Grid -->
 		<div id="main" class="container-fluid">
 			<div class="row">
-				<div id="left-menu" class="col-xs-2">
+				<div id="left-menu" class="col-xs-2 affix-top">
 				 <div class="row">
 				 	<div class="col-xs-12">
 						<input type="input" class="form-control" id="input-sub" placeholder="Enter a Subreddit">
 					</div>
 				 </div>
+				
 				 <div class="row">
 				 	<div id="sub-list" class="col-xs-12">
 						
 					</div>
 				 </div>
+				 <div class="row">
+					<div class="col-xs-12">
+						<select id="select-sort" class="form-control">
+						    <option selected="selected" disabled>Sort by:</option>
+						    <option value="hot">hot</option>
+						    <option value="new">new</option>
+						    <option value="day">top today</option>
+						    <option value="week">top this week</option>
+						    <option value="month">top this month</option>
+						    <option value="year">top this year</option>]
+						    <option value="all">top all time</option>
+						</select>
+					</div>
 				</div>
+				</div>
+
 				<div id="gallery" class="col-xs-10">
 					<div class="row">
-						<div id="col-1" class='col-xs-3'></div>
-						<div id="col-2" class='col-xs-3'></div>
-						<div id="col-3" class='col-xs-3'></div>
-						<div id="col-4" class='col-xs-3'></div>
+						<div id="col-1" class='col-xs-3 col'></div>
+						<div id="col-2" class='col-xs-3 col'></div>
+						<div id="col-3" class='col-xs-3 col'></div>
+						<div id="col-4" class='col-xs-3 col'></div>
 					</div>
 				</div>
 			</div>
@@ -105,7 +89,7 @@
 
 			<div class="row subreddit">
 				<div class="col-xs-12">
-					<a href="{{data.subreddit}}"><small>{{data.subreddit}}</small></a>
+					<a href="/r/{{data.subreddit}}"><small>{{data.subreddit}}</small></a>
 					<small><span class="glyphicon glyphicon-arrow-up"></span> {{data.ups}}</small>
 					<small><span class="glyphicon glyphicon-comment"></span></a>{{data.num_comments}}</small>
 				</div>
@@ -141,20 +125,32 @@ Handlebars.registerHelper("picHelper", function(data){
 
 $(document).ready(function() { 
 
-	subs = [];
 	{% if sub is defined %}
 		sub = '{{sub}}';
 	{% else %}
 		sub = null;
+		if (readCookie('subsCookie') != null){
+			subs = readCookie('subsCookie').split(',');
+			for (var i in subs){
+				console.log(subs[i]);
+				addToSubList(subs[i]);
+			}
+			sub = subs.join('+');
+		} else {
+			subs = [];
+		}
 	{% endif %}
+	
 	after = null;
 	count = 0;
-	limit = 40;
+	limit = 80;
 	sort = "hot";
 	cols = {'col-1':0, 'col-2':0, 'col-3':0, 'col-4':0}
+	resize();
 	getItems(sub, sort);
 });
 </script>
 
 <script src="/static/functions.js"></script>
 <script src="/static/events.js"></script>
+<script src="/static/cookies.js"></script>

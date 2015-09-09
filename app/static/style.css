@@ -2,9 +2,16 @@ body {
 	background-color: #F2F2F2;
 }
 
+#left-menu, #gallery {
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
 #left-menu{
-	padding: 30px 30px 0 30px;
 	color: black;
+	padding:15px;
+
+
 }
 
 #input-sub{
@@ -12,7 +19,8 @@ body {
 }
 
 #sub-list{
-	padding:30px;
+	padding: 15px;
+	padding-left:50px;
 }
 
 .sub{
@@ -28,9 +36,11 @@ a:hover{
 	padding: 0;
 	cursor:pointer;
 	border: 1px solid #F2F2F2;
-	margin: 0 -15px;
 }
 
+.col{
+	padding: 0;
+}
 
 .infobox {
 	display: none;
@@ -62,11 +72,6 @@ a:hover{
 	width: 100%;
 	border: 0 none;
 
-}
-
-
-#main{
-	padding:0;
 }
 
 .row{
