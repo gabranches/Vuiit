@@ -18,10 +18,3 @@ class RedditApi(object):
 @app.route('/index')
 def index():
 	return render_template('index.html')
-
-
-@app.route('/test')
-def test():
-	reddit = RedditApi('girlsinyogapants')
-	reddit.get_posts()
-	return json.dumps(reddit.data)
