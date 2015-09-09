@@ -20,7 +20,7 @@
 
 		<!-- Nav -->
 
-		<nav class="row-fluid navbar navbar-fixed-top" role="navigation">
+		<nav style="display:none;" class="row-fluid navbar navbar-fixed-top" role="navigation">
 
 			<div class="container">
 
@@ -62,29 +62,25 @@
 			</div>
 		</nav>
 
-		<!-- Bottom bar -->
-
-		<div class="row-fluid navbar navbar-fixed-bottom">
-			<div id="bottombar" class="container">
-				<div id="load-div" style="display:none;" class="row">
-					<div class="col-xs-6 text-right">
-						<img src="static/images/ajax-loader.gif" />
-					</div>
-					<div class="col-xs-6 text-left">
-						Loading...
-					</div>
-				</div>
-			</div>
-		</div>
-
 		<!-- Grid -->
 
 		<div id="mobile-spacer">
 			<div class='hiden-md hidden-lg' style='height:44px;'></div>
 		</div>
 
-		<div id="main" class="container">
-
+		<div id="main" class="container-fluid">
+			<div class="row">
+				<div id="left-menu" class="col-xs-2">
+				</div>
+				<div id="gallery" class="col-xs-10">
+					<div class="row">
+						<div id="col-1" class='col-xs-3'></div>
+						<div id="col-2" class='col-xs-3'></div>
+						<div id="col-3" class='col-xs-3'></div>
+						<div id="col-4" class='col-xs-3'></div>
+					</div>
+				</div>
+			</div>
 		</div>
 
 		<!--Start Google Analytics-->
@@ -109,30 +105,24 @@
 
  <script id="simple-template" type="text/x-handlebars-template">
 
-	<div class="col-xs-4 col-sm-3 col-md-3 picbox">
-		<a style="{{thumbnailHelper}}" target="_blank" href="{{url}}"><img src="{{thumbnail}}" /></a>
+	<div class="picbox">
+		<a style="{{thumbnailHelper}}" target="_blank" href="{{url}}"><img src="{{{picHelper preview.images.0.resolutions}}}" /></a>
 		<div class="col-xs-12 {{display}}" >
 
 			<div class="row">
 				<div class="col-xs-12">
-					<a id="extlink" href="{{url}}" target="_blank">{{formatTitle title}}</a>
+					<a id="extlink" href="http://www.reddit.com/{{permalink}}" target="_blank">{{formatTitle title}}</a>
 				</div>
 			</div>
 
 			<div class="row subreddit">
 				<div class="col-xs-12">
 					<a href="{{subreddit}}"><small>{{subreddit}}</small></a>
+					<small><span class="glyphicon glyphicon-arrow-up"></span> {{ups}}</small>
+					<small><span class="glyphicon glyphicon-comment"></span></a>{{num_comments}}</small>
 				</div>
 			</div>
 
-			<div class="row upscomments">
-				<div class="col-xs-12 text-left">
-					<small><span class="glyphicon glyphicon-arrow-up"></span> {{ups}}</small>
-					<small><a target="_blank" href="http://www.reddit.com/{{permalink}}"><span class="glyphicon glyphicon-comment"></span></a><a class="commentlink" href="http://www.reddit.com/{{permalink}}" target="_blank">{{num_comments}}</a></small></small>
-
-				</div
-
-			</div>
 			
 		</div>
 	</div>
@@ -146,10 +136,18 @@
 // ---- Handlebars Helpers
 
 Handlebars.registerHelper("formatTitle", function(title){
-
 	var textlimit = 60;
 	return (title.length > textlimit) ? title.substring(0, textlimit) + "..." : title;
+});
 
+
+Handlebars.registerHelper("picHelper", function(resolutions){
+	console.log(resolutions);
+	if (resolutions.length > 1) {
+		return resolutions[1]['url'];
+	} else {
+		return resolutions[0]['url'];
+	}
 });
 
 // ----  Document Ready
@@ -157,14 +155,7 @@ Handlebars.registerHelper("formatTitle", function(title){
 $(document).ready(function() { 
 
 	subs = [
-		'girlsinyogapants',
-		'homemadexxx',
-		'pornvids',
-		'cumsluts',
-		'candidfashionpolice',
-		'leotards',
-		'randomsexiness',
-		'realgirls'
+		'nsfw'
 		];
 
 	sub = subs.join("+");
@@ -287,27 +278,16 @@ function getItems(sub, sort){
 			break;
 	}
 	
-	var url 		= "http://www.reddit.com/" + subUrl + "/" + sortType + "/.json?" + sortUrl + "&" + limitUrl + afterUrl + countUrl;
+	var url = "http://www.reddit.com/" + subUrl + "/" + sortType + "/.json?" + sortUrl + "&" + limitUrl + afterUrl + countUrl;
 
 	$.getJSON( url, function(data) {
-
-		
 		listItems(data, false);
 		$("#load-div").hide();
-		resizePics();
-
 	}).fail(function(data) {
 		$("#main").empty();
 		$("#main").append("<br />Could not get data from subreddit '"+sub+"'. Please make sure that this subreddit exists, or try again in a few minutes.");
 	});
-
-}
-
-function resizePics(){
-	var wd = $(".picbox").css("width");
-	$(".picbox").css("height", wd);
-	$(".picbox2").css("height", wd);
-}
+	}
 
 function listItems(json, printtext){
 
@@ -315,13 +295,22 @@ function listItems(json, printtext){
 
 	var raw_template = $('#simple-template').html();
 	var template = Handlebars.compile(raw_template);
-	var placeHolder = $("#main");
  
 	$.each(json.data.children, function(i,element){ // Iterate through JSON object
 
+		if((count % 4) == 0){
+			var placeHolder = $("#col-1");
+		} else if ((count % 4) == 1){
+			var placeHolder = $("#col-2");
+		} else if ((count % 4) == 2){
+			var placeHolder = $("#col-3");
+		} else {
+			var placeHolder = $("#col-4");
+		}
+
 		if((count % 12) == 0){
 
-			$(placeHolder).append("<div class=\"row\">");
+			$(placeHolder).append("<div class='row'>");
 
 		}		
 
@@ -329,7 +318,6 @@ function listItems(json, printtext){
 			element.data.display = "infobox-nojs";
 			element.data.thumbnailHelper = 'display:none;';
 			element.data.ismedia = false;
-			
 		} else {
 			element.data.display = "infobox";
 			element.data.thumbnailHelper = null;
