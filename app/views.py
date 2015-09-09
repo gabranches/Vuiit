@@ -4,17 +4,12 @@ import requests
 import json
 
 
-class RedditApi(object):
-	def __init__(self, sub):
-		self.sub = sub
-
-	def get_posts(self):
-		url = 'http://www.reddit.com/r/' + self.sub + '/.json'
-		r = requests.get(url)
-		self.data = json.loads(r.text)
-
 
 @app.route('/')
-@app.route('/index')
 def index():
 	return render_template('index.html')
+
+
+@app.route('/r/<sub>')
+def sub_page(sub):
+	return render_template('index.html', sub=str(sub))

@@ -2,6 +2,23 @@ body {
 	background-color: #F2F2F2;
 }
 
+#left-menu{
+	padding: 30px 30px 0 30px;
+	color: black;
+}
+
+#input-sub{
+
+}
+
+#sub-list{
+	padding:30px;
+}
+
+.sub{
+	cursor: pointer;
+}
+
 a:hover{
 	text-decoration:none;
 }
@@ -47,17 +64,6 @@ a:hover{
 
 }
 
-.navbar{
-	background-color:black;
-}
-
-.navbar-fixed-top{
-	padding:10px;
-}
-
-#bottombar{
-	padding:10px;
-}
 
 #main{
 	padding:0;
