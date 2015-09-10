@@ -21,10 +21,12 @@ function clearCols(){
 }
 
 function addSub(sub){
-	if (subs.indexOf(sub) == -1){
-		subs.push(sub);
-		addToSubList(sub);
-		createCookie('subsCookie', subs.join(','));
+	if (events == 1){
+		if (subs.indexOf(sub) == -1){
+			subs.push(sub);
+			addToSubList(sub);
+			createCookie('subsCookie', subs.join(','));
+		}
 	}
 }
 
@@ -32,16 +34,21 @@ function removeSub(sub){
 	var index = subs.indexOf(sub);
 	subs.splice(index,1);
 	createCookie('subsCookie', subs.join(','));
+	if (subs.length == 0){
+		eraseCookie('subsCookie');
+	}
 }
 
 function addToSubList(sub){
 	$("#sub-list").append('<div sub-id="' +
-		sub + '" class="row sub">r/' +
-		sub + "</div>");
+		sub + '" class="row sub"><span class="sub-link">r/' +
+		sub + '</span> <span class="remove-button" sub-id="' +
+		sub + '"><small>[remove]</small></span></div>');
 }
 
 function getItems(sub, sort){
 
+	events = 0;
 	var subUrl 	= (sub == null ) ? "" : "r/"+sub;
 	var limitUrl 	= "limit=" + limit;
 	var afterUrl 	= (after == null) ? "" : "&after="+after;
@@ -81,7 +88,8 @@ function getItems(sub, sort){
 	var url = "http://www.reddit.com/" + subUrl + "/" + sortType + "/.json?" + sortUrl + "&" + limitUrl + afterUrl + countUrl;
 
 	$.getJSON( url, function(data) {
-		console.log(data);
+		events = 1;
+		console.log(url);
 		listItems(data, false);
 		$("#load-div").hide();
 		}).fail(function(data) {

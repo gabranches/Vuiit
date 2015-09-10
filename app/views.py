@@ -13,3 +13,7 @@ def index():
 @app.route('/r/<sub>')
 def sub_page(sub):
 	return render_template('index.html', sub=str(sub))
+
+@app.route('/link/<link>')
+def link_page(link):
+	return render_template('index.html', link=str(link))

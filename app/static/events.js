@@ -21,16 +21,35 @@ $("#select-sub").change(function() {
 	window.location.href = sub;
 });
 
+// Goto sub
+$(document).on("click", ".sub-link", function(){
+	var sublink = $(this).parent().attr('sub-id');
+	window.location.href = '/r/' + sublink;	
+});
+
+
 // Remove sub
-$(document).on("click", ".sub", function(){
-	console.log('click');
-	removeSub($(this).attr('sub-id'));
-	$(this).remove();
-	if (subs.length == 0){
-		refreshSub(null, sort);
-	} else {
-		refreshSub(subs.join('+'), sort);
+$(document).on("click", ".remove-button", function(){
+	if (events == 1){
+		console.log('click');
+		removeSub($(this).attr('sub-id'));
+		$(this).parent().remove();
+		if (subs.length == 0){
+			refreshSub(null, sort);
+		} else {
+			refreshSub(subs.join('+'), sort);
+		}
 	}
+});
+
+// Show Remove button
+$(document).on("mouseenter", ".sub", function(){  
+	$(this).find(".remove-button").show();
+});
+
+// Hide Remove button
+$(document).on("mouseleave", ".sub", function(){ 	
+	$(this).find(".remove-button").hide();
 });
 
 // Dropdown submit
