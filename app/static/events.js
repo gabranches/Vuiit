@@ -31,7 +31,6 @@ $(document).on("click", ".sub-link", function(){
 // Remove sub
 $(document).on("click", ".remove-button", function(){
 	if (events == 1){
-		console.log('click');
 		removeSub($(this).attr('sub-id'));
 		$(this).parent().remove();
 		if (subs.length == 0){
@@ -71,7 +70,9 @@ $(document).on("mouseleave", ".picbox", function(){
 // Page scroller
 $("#gallery").scroll(function () {		
    if ($("#gallery").scrollTop() >= $("#col-1").height() - $("#gallery").height()) {	
-		getItems(sub, sort);
+   		if (events == 1){
+			getItems(sub, sort);
+   		}
    }
 });
 

@@ -149,7 +149,6 @@ $(document).ready(function() {
 		if (readCookie('subsCookie') != null){
 			subs = readCookie('subsCookie').split(',');
 			for (var i in subs){
-				console.log(subs[i]);
 				addToSubList(subs[i]);
 			}
 			sub = subs.join('+');
