@@ -25,7 +25,7 @@ function addSub(sub){
 		if (subs.indexOf(sub) == -1){
 			subs.push(sub);
 			addToSubList(sub);
-			createCookie('subsCookie', subs.join(','));
+			createCookie('subsCookie', subs.join(','), 60);
 		}
 	}
 }
@@ -33,7 +33,7 @@ function addSub(sub){
 function removeSub(sub){
 	var index = subs.indexOf(sub);
 	subs.splice(index,1);
-	createCookie('subsCookie', subs.join(','));
+	createCookie('subsCookie', subs.join(','), 60);
 	if (subs.length == 0){
 		eraseCookie('subsCookie');
 	}
