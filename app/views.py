@@ -1,12 +1,18 @@
-from app import app
+from app import app, db
 from flask import render_template
+
 import requests
 import json
+from models import Url
 
 
 
 @app.route('/')
 def index():
+	# url = Url('test4','test2','test3')
+	# db.session.add(url)
+	# db.session.commit()
+	print 'index'
 	return render_template('index.html')
 
 
