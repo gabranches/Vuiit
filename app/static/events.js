@@ -76,13 +76,16 @@ $("#gallery").scroll(function () {
    }
 });
 
-// Load more
-$(document).on("click", "#load-more", function(){
+// Share
+$(document).on("click", "#share", function(){
+		$("#share-link").hide();
+		$("#share-load").show();
 		$.ajax({
 			url: "/share?link=" + subs.join(','),
 			success: function(data){
-				$("#load-more").append(data);
-				console.log('success');
+				$("#share-load").hide();
+				$("#share-link").show();
+				$("#share-link").val("http://127.0.0.1/" + data);				
 			}
 		});
 });

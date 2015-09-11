@@ -18,6 +18,6 @@ def sub_page(sub):
 
 @app.route('/share', methods=['GET'])
 def share_ajax():
-	key = url_shortener.KeyGenerator(3, request.args.get('link'))
-	key.write_to_db()
-	return str(key.link)
+	key_obj = url_shortener.KeyGenerator(request.args.get('link'))
+	key_obj.write_to_db()
+	return str(key_obj.key)

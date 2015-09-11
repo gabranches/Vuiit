@@ -12,6 +12,14 @@ body {
 	padding:15px;
 }
 
+#share-load{
+	display:none;
+}
+
+#share-link{
+	display:none;
+}
+
 .remove-button{
 	display:none;
 	color:red;
@@ -20,6 +28,10 @@ body {
 #sub-list{
 	padding: 15px;
 	padding-left:50px;
+}
+
+.menuitem{
+	padding:15px;
 }
 
 .sub{

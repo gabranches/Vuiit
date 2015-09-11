@@ -5,8 +5,7 @@ from app.models import Url
 
 class KeyGenerator():
 
-	def __init__(self, pairs, link):
-		self.pairs = pairs
+	def __init__(self, link):
 		self.link = link
 
 	letters = ['a','b','c','d','e','f','g','h',
@@ -15,6 +14,7 @@ class KeyGenerator():
 	              'y','z']
 
 	nums = range(0,10)
+	pairs = 3
 
 	def write_to_db(self):
 		result = True
@@ -25,9 +25,10 @@ class KeyGenerator():
 			except:
 				pass
 
-		entry = Url(temp_key, self.link, 'text')
+		entry = Url(temp_key, self.link)
 		db.session.add(entry)
 		db.session.commit()
+		self.key = temp_key
 
 
 	def pick_letter(self):
