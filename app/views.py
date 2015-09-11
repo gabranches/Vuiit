@@ -1,18 +1,13 @@
 from app import app, db
-from flask import render_template
+from flask import render_template, request
+import url_shortener
 
 import requests
 import json
-from models import Url
-
 
 
 @app.route('/')
 def index():
-	# url = Url('test4','test2','test3')
-	# db.session.add(url)
-	# db.session.commit()
-	print 'index'
 	return render_template('index.html')
 
 
@@ -20,6 +15,9 @@ def index():
 def sub_page(sub):
 	return render_template('index.html', sub=str(sub))
 
-@app.route('/link/<link>')
-def link_page(link):
-	return render_template('index.html', link=str(link))
+
+@app.route('/share', methods=['GET'])
+def share_ajax():
+	key = url_shortener.KeyGenerator(3, request.args.get('link'))
+	key.write_to_db()
+	return str(key.link)

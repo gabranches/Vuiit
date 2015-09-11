@@ -97,32 +97,36 @@ function getItems(sub, sort){
 		});
 	}
 
+function whichColumn(){
+	// Returns the shortest column
+	c1 = cols['col-1'];
+	c2 = cols['col-2'];
+	c3 = cols['col-3'];
+	c4 = cols['col-4'];
+
+	var c_name = ['1','2','3','4']
+	var c_height = [c1,c2,c3,c4];
+	var min_height = 0;
+	var min_name = '1';
+
+	for (i = 0; i < c_name.length; i ++){
+		if (c_height[i] < min_height){
+			min_name = c_name[i];
+		}
+		min_height = c_height[i];
+	}
+	return min_name;
+}
+
 function listItems(json, printtext){
 
 	// Compile handlebars template
 	var raw_template = $('#simple-template').html();
 	var template = Handlebars.compile(raw_template);
  
-	$.each(json.data.children, function(i,element){ // Iterate through JSON object
+	$.each(json.data.children, function(i, element){ // Iterate through JSON object
 
-		if(cols['col-1'] <= cols['col-2']){
-			var placeHolder = $("#col-1");
-			element.data.col = 'col-1';
-		} else if (cols['col-2'] <= cols['col-3']){
-			var placeHolder = $("#col-2");
-			element.data.col = 'col-2';
-		} else if (cols['col-3'] <= cols['col-4']){
-			var placeHolder = $("#col-3");
-			element.data.col = 'col-3';
-		} else {
-			var placeHolder = $("#col-4");
-			element.data.col = 'col-4';
-		}
-
-
-		if((count % 12) == 0){
-			$(placeHolder).append("<div class='row'>");
-		}		
+		
 
 		if(element.data.thumbnail == "" || element.data.thumbnail =="self" || element.data.thumbnail =="default"){ 
 		// Don't display thumbnail for self posts and posts with no image
@@ -148,15 +152,15 @@ function listItems(json, printtext){
 			}
 		} else {
 			if(element.data.ismedia == true){
+				// Determine in which column to place the next picture
+				cur_col = (count % 4) + 1;
+				var placeHolder = $("#col-"+cur_col);
+				element.data.col = "col-" + cur_col;
 				var html = template(element); // Generate the HTML for each post
 				placeHolder.append(html); // Render the posts into the page
 				after = element.data.name;
 				count++;
 			}
 		}
-
-		if((count % 12) == (11)){
-			$(placeHolder).append("</div>");
-		}	
 	});
 }

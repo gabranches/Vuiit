@@ -76,6 +76,17 @@ $("#gallery").scroll(function () {
    }
 });
 
+// Load more
+$(document).on("click", "#load-more", function(){
+		$.ajax({
+			url: "/share?link=" + subs.join(','),
+			success: function(data){
+				$("#load-more").append(data);
+				console.log('success');
+			}
+		});
+});
+
 // Make picbox div a link
 $(document).on("click", ".picbox", function(){ 		
   window.open = $(this).find("#extlink").attr("href"); 
