@@ -30,7 +30,6 @@ class KeyGenerator():
 		db.session.commit()
 		self.key = temp_key
 
-
 	def pick_letter(self):
 		return random.choice(self.letters)
 
@@ -48,10 +47,19 @@ class KeyGenerator():
 		return self.key
 
 	def check_key_in_db(self, temp_key):
-		print temp_key
-		resp = Url.query.filter_by(key=temp_key).first()
-		if resp:
+		url_obj = Url.query.filter_by(key=temp_key).first()
+		if url_obj:
+			self.key = temp_key
 			return True
 		else:
 			return False
+
+	def check_if_link_in_db(self):
+		url_obj = Url.query.filter_by(link=self.link).first()
+		if url_obj:
+			self.key = url_obj.key
+			return self.key
+		else:
+			return False
+
 

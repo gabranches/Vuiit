@@ -2,6 +2,14 @@ body {
 	background-color: #F2F2F2;
 }
 
+.main-pg, .sub-pg, .link-pg{
+	display:none;
+}
+
+.menu-top{
+	margin-bottom:20px;
+}
+
 #left-menu, #gallery {
 	overflow-y: auto;
 	overflow-x: hidden;

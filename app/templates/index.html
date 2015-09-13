@@ -11,6 +11,7 @@
 		<script src="/static/handlebars-v2.0.0.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
 	</head>
 
 	<body>
@@ -19,34 +20,35 @@
 		<div id="main" class="container-fluid">
 			<div class="row">
 				<div id="left-menu" class="col-xs-2 affix-top">
-
-					{% if sub is defined %}
-							
-					<div class="row">
-					 	<div class="col-xs-12">
+					
+					<div class="row menu-top">
+					 	<div class="col-xs-12 sub-pg">
 							Browsing r/{{sub}}
 						</div>
-						<div class="col-xs-12">
+						<div class="col-xs-12 link-pg">
+							Browsing a shared gallery.
+						</div>
+						<div class="col-xs-12 sub-pg link-pg">
 							<a href="/">Back to main page</a>
-							<br /><br />
+						</div>
+						<div class="col-xs-12 main-pg">
+							Enter a subreddit below and it will be added to the gallery.</a>
 						</div>
 					</div>
 
-					{% else %}
 					
-					 <div class="row">
+					 <div class="row main-pg">
 					 	<div class="col-xs-12">
 							<input type="input" class="form-control" id="input-sub" placeholder="Enter a Subreddit">
 						</div>
 					 </div>
 					
-					 <div class="row">
+					 <div class="row main-pg share-pg">
 					 	<div id="sub-list" class="col-xs-12">
 							
 						</div>
 					 </div>
 
-					{% endif %}
 
 					 <div class="row">
 						<div class="col-xs-12">
@@ -63,7 +65,7 @@
 						</div>
 					</div>
 					<br /> <br />
-					<div class="row">
+					<div class="row main-pg">
 						<div class="menuitem col-xs-12 text-center">
 							<button id="share" type="button" class="btn btn-default">Share this Gallery</button>
 						</div>
@@ -154,10 +156,19 @@ Handlebars.registerHelper("picHelper", function(data){
 
 $(document).ready(function() { 
 
-	{% if sub is defined %}
-		sub = '{{sub}}';
+	{% if sub is defined %} 
+		// Sub Page
+		$(".sub-pg").show();
+		sub = '{{sub}}'
+	{% elif link is defined %} 
+		// Shared link page
+		$(".link-pg").show();
+		sub = '{{link}}'
 	{% else %}
+		// Regular page
+		$(".main-pg").show();
 		sub = null;
+		// Read cookies
 		if (readCookie('subsCookie') != null){
 			subs = readCookie('subsCookie').split(',');
 			for (var i in subs){
@@ -168,7 +179,7 @@ $(document).ready(function() {
 			subs = [];
 		}
 	{% endif %}
-	
+
 	events = 1;
 	after = null;
 	count = 0;
