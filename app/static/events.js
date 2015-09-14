@@ -9,7 +9,7 @@ $("#input-sub").focus(function() {
 $("#input-sub").keypress(function (e) {
 	if (e.which == 13) {
 		addSub($("#input-sub").val());
-		refreshSub(subs.join('+'), sort);
+		refreshSub(subs.join('+'));
 		$("#input-sub").val('');
 		$("#input-sub").attr("placeholder","Enter a Subreddit");
 	}
@@ -30,13 +30,13 @@ $(document).on("click", ".sub-link", function(){
 
 // Remove sub
 $(document).on("click", ".remove-button", function(){
-	if (events == 1){
+	if (state.events == 1){
 		removeSub($(this).attr('sub-id'));
 		$(this).parent().parent().remove();
 		if (subs.length == 0){
-			refreshSub(null, sort);
+			refreshSub(null);
 		} else {
-			refreshSub(subs.join('+'), sort);
+			refreshSub(subs.join('+'));
 		}
 	}
 });
@@ -53,8 +53,8 @@ $(document).on("mouseleave", ".sub", function(){
 
 // Dropdown submit
 $("#select-sort").change(function() { 	
-	sort = $("#select-sort").find(":selected").val();
-	refreshSub(sub, sort);
+	options.sort = $("#select-sort").find(":selected").val();
+	refreshSub(sub);
 });
 
 // Pic info box show
@@ -67,13 +67,18 @@ $(document).on("mouseleave", ".picbox", function(){
 	$(this).find(".infobox").hide();
 });
 
-// Page scroller
-$("#gallery").scroll(function () {		
-   if ($("#gallery").scrollTop() >= $("#col-1").height() - $("#gallery").height()) {	
-   		if (events == 1){
-			getItems(sub, sort);
-   		}
-   }
+// Auto-loader
+$("#gallery").scroll(function(){
+	if ($('.load-more').visible(true)){
+		getItems(sub);
+	}
+});
+
+// Load more button (in case auto-loader doesn't work)
+$(document).on("click", ".load-more", function(){	
+	if (state.events == 1){
+		getItems(sub);
+	}
 });
 
 // Share

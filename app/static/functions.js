@@ -6,11 +6,11 @@ function resize(){
 	$("#gallery").css("height", height + "px");
 }
 
-function refreshSub(sub, sort){
-	count = 0;
-	after = null;
+function refreshSub(sub){
+	state.count = 0;
+	state.after = null;
 	clearCols();
-	getItems(sub, sort);
+	getItems(sub);
 }
 
 function clearCols(){
@@ -21,7 +21,7 @@ function clearCols(){
 }
 
 function addSub(sub){
-	if (events == 1){
+	if (state.events == 1){
 		if (subs.indexOf(sub) == -1){
 			subs.push(sub);
 			addToSubList(sub);
@@ -46,15 +46,15 @@ function addToSubList(sub){
 		sub + '"><small>[remove]</small></span></span></div>');
 }
 
-function getItems(sub, sort){
+function getItems(sub){
 
-	events = 0;
-	var subUrl 	= (sub == null ) ? "" : "r/"+sub;
-	var limitUrl 	= "limit=" + limit;
-	var afterUrl 	= (after == null) ? "" : "&after="+after;
-	var countUrl 	= (count == 0) ? "" : "&count="+count;
+	state.events = 0;
+	var subUrl 	= (sub == null ) ? "" : "r/" + sub;
+	var limitUrl 	= "limit=" + options.limit;
+	var afterUrl 	= (state.after == null) ? "" : "&after=" + state.after;
+	var countUrl 	= (state.count == 0) ? "" : "&count=" + state.count;
 
-	switch(sort) {
+	switch(options.sort) {
 		case "hot":
 			var sortType = "hot";
 			var sortUrl = "sort=hot";
@@ -88,21 +88,19 @@ function getItems(sub, sort){
 	var url = "http://www.reddit.com/" + subUrl + "/" + sortType + "/.json?" + sortUrl + "&" + limitUrl + afterUrl + countUrl;
 
 	$.getJSON( url, function(data) {
-		events = 1;
-		console.log(url);
+		state.events = 1;
+		state.url = url;
 		listItems(data, false);
-		$("#load-div").hide();
-		}).fail(function(data) {
-			console.log("Could not get data from subreddit '"+sub+"'. Please make sure that this subreddit exists, or try again in a few minutes.");
-		});
-	}
+		$(".load-button-wrapper").show();
+	});
+}
 
 function whichColumn(){
 	// Returns the shortest column
-	c1 = cols['col-1'];
-	c2 = cols['col-2'];
-	c3 = cols['col-3'];
-	c4 = cols['col-4'];
+	var c1 = cols['col-1'];
+	var c2 = cols['col-2'];
+	var c3 = cols['col-3'];
+	var c4 = cols['col-4'];
 
 	var c_name = ['1','2','3','4']
 	var c_height = [c1,c2,c3,c4];
@@ -118,6 +116,10 @@ function whichColumn(){
 	return min_name;
 }
 
+function addLoadMoreButton(){
+	$(".load-button-wrapper").append("<button type='button' class='load-more btn btn-default'>Load More...</button>");
+}
+
 function listItems(json, printtext){
 
 	// Compile handlebars template
@@ -125,8 +127,6 @@ function listItems(json, printtext){
 	var template = Handlebars.compile(raw_template);
  
 	$.each(json.data.children, function(i, element){ // Iterate through JSON object
-
-		
 
 		if(element.data.thumbnail == "" || element.data.thumbnail =="self" || element.data.thumbnail =="default"){ 
 		// Don't display thumbnail for self posts and posts with no image
@@ -147,19 +147,19 @@ function listItems(json, printtext){
 			if (element.data.stickied == false){
 				var html = template(element); // Generate the HTML for each post
 				placeHolder.append(html); // Render the posts into the page
-				after = element.data.name;
-				count++;
+				state.after = element.data.name;
+				state.count++;
 			}
 		} else {
 			if(element.data.ismedia == true){
 				// Determine in which column to place the next picture
-				cur_col = (count % 4) + 1;
+				var cur_col = (state.count % 4) + 1;
 				var placeHolder = $("#col-"+cur_col);
 				element.data.col = "col-" + cur_col;
 				var html = template(element); // Generate the HTML for each post
 				placeHolder.append(html); // Render the posts into the page
-				after = element.data.name;
-				count++;
+				state.after = element.data.name;
+				state.count++;
 			}
 		}
 	});
