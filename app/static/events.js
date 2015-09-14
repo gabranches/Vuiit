@@ -32,7 +32,7 @@ $(document).on("click", ".sub-link", function(){
 $(document).on("click", ".remove-button", function(){
 	if (events == 1){
 		removeSub($(this).attr('sub-id'));
-		$(this).parent().remove();
+		$(this).parent().parent().remove();
 		if (subs.length == 0){
 			refreshSub(null, sort);
 		} else {
@@ -81,11 +81,11 @@ $(document).on("click", "#share", function(){
 		$("#share-link").hide();
 		$("#share-load").show();
 		$.ajax({
-			url: "/share?link=" + subs.join(','),
+			url: "/ajax/share?link=" + subs.join(','),
 			success: function(data){
 				$("#share-load").hide();
 				$("#share-link").show();
-				$("#share-link").val("http://127.0.0.1/" + data);				
+				$("#share-link").val("http://127.0.0.1/g/" + data);				
 			}
 		});
 });

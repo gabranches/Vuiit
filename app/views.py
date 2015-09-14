@@ -15,7 +15,7 @@ def index():
 def sub_page(sub):
 	return render_template('index.html', sub=str(sub))
 
-@app.route('/share', methods=['GET'])
+@app.route('/ajax/share', methods=['GET'])
 def share_ajax():
 	url_obj = url_shortener.KeyGenerator(request.args.get('link'))
 	key = url_obj.check_if_link_in_db()
@@ -26,7 +26,7 @@ def share_ajax():
 		url_obj.write_to_db()
 	return str(url_obj.key)
 
-@app.route('/<key>')
+@app.route('/g/<key>')
 def share_page(key):
 	url_obj = Url.query.filter_by(key=key).first()
 	link = url_obj.link.replace(',', '+')

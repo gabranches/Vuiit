@@ -42,8 +42,8 @@ function removeSub(sub){
 function addToSubList(sub){
 	$("#sub-list").append('<div sub-id="' +
 		sub + '" class="row sub"><span class="sub-link">r/' +
-		sub + '</span> <span class="remove-button" sub-id="' +
-		sub + '"><small>[remove]</small></span></div>');
+		sub + '</span> <span class="main-pg"><span class="remove-button" sub-id="' +
+		sub + '"><small>[remove]</small></span></span></div>');
 }
 
 function getItems(sub, sort){

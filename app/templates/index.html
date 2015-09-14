@@ -26,16 +26,15 @@
 							Browsing r/{{sub}}
 						</div>
 						<div class="col-xs-12 link-pg">
-							Browsing a shared gallery.
+							Browsing a shared gallery
 						</div>
 						<div class="col-xs-12 sub-pg link-pg">
 							<a href="/">Back to main page</a>
 						</div>
 						<div class="col-xs-12 main-pg">
-							Enter a subreddit below and it will be added to the gallery.</a>
+							Enter a subreddit below and it will be added to the gallery</a>
 						</div>
 					</div>
-
 					
 					 <div class="row main-pg">
 					 	<div class="col-xs-12">
@@ -43,9 +42,8 @@
 						</div>
 					 </div>
 					
-					 <div class="row main-pg share-pg">
+					 <div class="row main-pg link-pg">
 					 	<div id="sub-list" class="col-xs-12">
-							
 						</div>
 					 </div>
 
@@ -164,9 +162,12 @@ $(document).ready(function() {
 		// Shared link page
 		$(".link-pg").show();
 		sub = '{{link}}'
+		subs = sub.split('+')
+		for (var i in subs){
+			addToSubList(subs[i]);
+		}
 	{% else %}
 		// Regular page
-		$(".main-pg").show();
 		sub = null;
 		// Read cookies
 		if (readCookie('subsCookie') != null){
@@ -178,6 +179,7 @@ $(document).ready(function() {
 		} else {
 			subs = [];
 		}
+		$(".main-pg").show();
 	{% endif %}
 
 	events = 1;
