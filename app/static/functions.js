@@ -154,19 +154,17 @@ function listItems(json){
 
 			if(options.show_text == true){
 				if (element.data.stickied == false){
-
 					var html = info_template(element); // Generate the HTML for each post
 					placeHolder.append(html); // Render the posts into the page
-
 				}
 			}
 				
 		} else {
-			var html = pic_template(element); // Generate the HTML for each post
-			placeHolder.append(html); // Render the posts into the page
-			
+			if (element.data.stickied == false){
+				var html = pic_template(element); // Generate the HTML for each post
+				placeHolder.append(html); // Render the posts into the page
+			}
 		}
-
 		state.after = element.data.name;
 		state.count++;
 	});
