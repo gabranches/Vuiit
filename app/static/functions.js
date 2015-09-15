@@ -7,6 +7,7 @@ function resize(){
 }
 
 function refreshSub(){
+	$(".load-button-wrapper").hide();
 	state.count = 0;
 	state.after = null;
 	clearCols();
@@ -26,7 +27,9 @@ function addSub(sub){
 			subs.push(sub);
 			addToSubList(sub);
 			createCookie('subsCookie', subs.join(','), 60);
-			refreshSub()
+			refreshSub();
+			$(".share-button-wrapper").show();
+			$(".share-result").hide();
 		}
 	}
 }
@@ -37,8 +40,10 @@ function removeSub(sub){
 	createCookie('subsCookie', subs.join(','), 60);
 	if (subs.length == 0){
 		eraseCookie('subsCookie');
-		refreshSub();
 	}
+	refreshSub();
+	$(".share-button-wrapper").show();
+	$(".share-result").hide();
 
 }
 
@@ -101,13 +106,16 @@ function getItems(){
 	$.getJSON( url, function(data) {
 		state.events = 1;
 		state.url = url;
-		listItems(data, false);
+		listItems(data);
 		$(".load-button-wrapper").show();
+	}).fail(function(){
+		window.alert("Could not fetch data. Please check that the subreddits are valid.");
+		state.events = 1;
 	});
 }
 
 function whichColumn(){
-	// Returns the shortest column
+	// Returns the shortest columns
 	var c1 = cols['col-1'];
 	var c2 = cols['col-2'];
 	var c3 = cols['col-3'];
@@ -125,6 +133,24 @@ function whichColumn(){
 		min_height = c_height[i];
 	}
 	return min_name;
+}
+
+function loadCookies(){
+	optionsCookie = JSON.parse(readCookie("options"));
+	// Show text posts
+	if (optionsCookie.show_text != false) {
+		options.show_text = optionsCookie.show_text;
+		$("#options-text").prop("checked", true);
+	}
+	// Show NSFW posts
+	if (optionsCookie.show_nsfw != false) {
+		options.show_nsfw = optionsCookie.show_nsfw;
+		$("#options-nsfw").prop("checked", true);
+	}
+}
+
+function createOptionsCookie(){
+	createCookie("options", JSON.stringify(options));
 }
 
 function listItems(json){

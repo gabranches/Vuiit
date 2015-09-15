@@ -11,14 +11,17 @@ body {
 	overflow-y: auto;
 	overflow-x: hidden;
 }
+#gallery-label{
+	margin:10px;
+}
+.share-result{
+	display:none;
+}
 #left-menu{
 	color: black;
 	padding:15px;
 }
-#share-load{
-	display:none;
-}
-#share-link{
+.share-load{
 	display:none;
 }
 .remove-button{

@@ -17,17 +17,20 @@ def sub_page(sub):
 
 @app.route('/ajax/share', methods=['GET'])
 def share_ajax():
-	url_obj = url_shortener.KeyGenerator(request.args.get('link'))
-	key = url_obj.check_if_link_in_db()
+	keygen_obj = url_shortener.KeyGenerator(request.args.get('link'))
+	keygen_obj.write_to_db()
+	return str(keygen_obj.key)
 
-	if key:
-		return str(url_obj.key)
-	else:
-		url_obj.write_to_db()
-	return str(url_obj.key)
+@app.route('/ajax/updatename', methods=['GET'])
+def updatename_ajax():
+	url_obj = Url.query.filter_by(key=request.args.get('key')).first()
+	url_obj.name = request.args.get('name')
+	db.session.commit()
+
 
 @app.route('/g/<key>')
 def share_page(key):
 	url_obj = Url.query.filter_by(key=key).first()
 	link = url_obj.link.replace(',', '+')
-	return render_template('index.html', link=str(link))
+	name = url_obj.name.replace(',', '+')
+	return render_template('index.html', link=str(link), name=str(name))

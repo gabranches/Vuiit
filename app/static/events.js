@@ -15,12 +15,46 @@ $("#input-sub").keypress(function (e) {
 	}
 });
 
+// Add gallery name
+$("#share-name").keypress(function (e) {
+	if (e.which == 13) {
+		var name = $("#share-name").val();
+		$.ajax({
+			url: "/ajax/updatename?name=" + name + "&key=" + state.key,
+			success: function(data){
+	
+			}
+		});
+	}
+});
+
 // Goto sub
 $(document).on("click", ".sub-link", function(){
 	var sublink = $(this).parent().attr('sub-id');
 	window.location.href = '/r/' + sublink;	
 });
 
+// Options show text
+$("#options-text").click(function(){
+	if($(this).is(":checked")){
+		options.show_text = true;
+	} else {
+		options.show_text = false;
+	}
+	refreshSub();
+	createOptionsCookie();
+});
+
+// Options show NSFW
+$("#options-nsfw").click(function(){
+	if($(this).is(":checked")){
+		options.show_nsfw = true;
+	} else {
+		options.show_nsfw = false;
+	}
+	refreshSub();
+	createOptionsCookie();
+});
 
 // Remove sub
 $(document).on("click", ".remove-button", function(){
@@ -77,13 +111,14 @@ $(document).on("click", ".load-more", function(){
 
 // Share
 $(document).on("click", "#share", function(){
-		$("#share-link").hide();
-		$("#share-load").show();
+		$(".share-load").show();
 		$.ajax({
 			url: "/ajax/share?link=" + subs.join(','),
 			success: function(data){
-				$("#share-load").hide();
-				$("#share-link").show();
+				state.key = data;
+				$(".share-load").hide();
+				$(".share-result").show();
+				$(".share-button-wrapper").hide();
 				$("#share-link").val("http://127.0.0.1/g/" + data);				
 			}
 		});
