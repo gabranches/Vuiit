@@ -6,11 +6,11 @@ function resize(){
 	$("#gallery").css("height", height + "px");
 }
 
-function refreshSub(sub){
+function refreshSub(){
 	state.count = 0;
 	state.after = null;
 	clearCols();
-	getItems(sub);
+	getItems(subs.join('+'));
 }
 
 function clearCols(){
@@ -26,6 +26,7 @@ function addSub(sub){
 			subs.push(sub);
 			addToSubList(sub);
 			createCookie('subsCookie', subs.join(','), 60);
+			refreshSub()
 		}
 	}
 }
@@ -36,20 +37,30 @@ function removeSub(sub){
 	createCookie('subsCookie', subs.join(','), 60);
 	if (subs.length == 0){
 		eraseCookie('subsCookie');
+		refreshSub();
 	}
+
 }
 
 function addToSubList(sub){
-	$("#sub-list").append('<div sub-id="' +
-		sub + '" class="row sub"><span class="sub-link">r/' +
-		sub + '</span> <span class="main-pg"><span class="remove-button" sub-id="' +
-		sub + '"><small>[remove]</small></span></span></div>');
+	if (state.page == "main") {
+		$("#sub-list").append('<div sub-id="' +
+			sub + '" class="row sub"><span class="sub-link">r/' +
+			sub + '</span> <span class="remove-button" sub-id="' +
+			sub + '"><small>[remove]</small></span></div>');
+	} else {
+		$("#sub-list").append('<div sub-id="' +
+			sub + '" class="row sub"><span class="sub-link">r/' +
+			sub + '</span></div>');
+	}
+	
 }
 
-function getItems(sub){
+function getItems(){
 
+	sub = subs.join('+');
 	state.events = 0;
-	var subUrl 	= (sub == null ) ? "" : "r/" + sub;
+	var subUrl 	= (sub == '' ) ? "" : "r/" + sub;
 	var limitUrl 	= "limit=" + options.limit;
 	var afterUrl 	= (state.after == null) ? "" : "&after=" + state.after;
 	var countUrl 	= (state.count == 0) ? "" : "&count=" + state.count;
@@ -116,51 +127,47 @@ function whichColumn(){
 	return min_name;
 }
 
-function addLoadMoreButton(){
-	$(".load-button-wrapper").append("<button type='button' class='load-more btn btn-default'>Load More...</button>");
-}
-
-function listItems(json, printtext){
+function listItems(json){
 
 	// Compile handlebars template
 	var raw_template = $('#simple-template').html();
-	var template = Handlebars.compile(raw_template);
+	var pic_template = Handlebars.compile(raw_template);
+	var raw_template = $('#info-template').html();
+	var info_template = Handlebars.compile(raw_template);
  
 	$.each(json.data.children, function(i, element){ // Iterate through JSON object
 
-		if(element.data.thumbnail == "" || element.data.thumbnail =="self" || element.data.thumbnail =="default"){ 
-		// Don't display thumbnail for self posts and posts with no image
-			element.data.display = "infobox-nojs";
-			element.data.thumbnailHelper = 'display:none;';
-			element.data.ismedia = false;
-		} else {
-			element.data.display = "infobox";
-			element.data.thumbnailHelper = null;
-			element.data.ismedia = true;
+		if (element.length == 0){
+			$(".load-button-wrapper").hide();
 		}
 
 		if(element.data.thumbnail == "nsfw"){
-			element.data.thumbnail = "images/nsfw.png"
+			element.data.thumbnail = "/static/images/nsfw.png";
+		}
+		// Determine in which column to place the next picture
+		var cur_col = (state.count % 4) + 1;
+		var placeHolder = $("#col-"+cur_col);
+		element.data.col = "col-" + cur_col;
+
+		if(element.data.thumbnail == 'self' || element.data.thumbnail == 'default' || element.data.thumbnail == ''){
+			
+
+			if(options.show_text == true){
+				if (element.data.stickied == false){
+
+					var html = info_template(element); // Generate the HTML for each post
+					placeHolder.append(html); // Render the posts into the page
+
+				}
+			}
+				
+		} else {
+			var html = pic_template(element); // Generate the HTML for each post
+			placeHolder.append(html); // Render the posts into the page
+			
 		}
 
-		if(printtext == true){
-			if (element.data.stickied == false){
-				var html = template(element); // Generate the HTML for each post
-				placeHolder.append(html); // Render the posts into the page
-				state.after = element.data.name;
-				state.count++;
-			}
-		} else {
-			if(element.data.ismedia == true){
-				// Determine in which column to place the next picture
-				var cur_col = (state.count % 4) + 1;
-				var placeHolder = $("#col-"+cur_col);
-				element.data.col = "col-" + cur_col;
-				var html = template(element); // Generate the HTML for each post
-				placeHolder.append(html); // Render the posts into the page
-				state.after = element.data.name;
-				state.count++;
-			}
-		}
+		state.after = element.data.name;
+		state.count++;
 	});
 }

@@ -15,12 +15,6 @@ $("#input-sub").keypress(function (e) {
 	}
 });
 
-// Dropdown submit
-$("#select-sub").change(function() { 	
-	sub = $("#select-sub").find(":selected").text();
-	window.location.href = sub;
-});
-
 // Goto sub
 $(document).on("click", ".sub-link", function(){
 	var sublink = $(this).parent().attr('sub-id');
@@ -32,7 +26,7 @@ $(document).on("click", ".sub-link", function(){
 $(document).on("click", ".remove-button", function(){
 	if (state.events == 1){
 		removeSub($(this).attr('sub-id'));
-		$(this).parent().parent().remove();
+		$(this).parent().remove();
 		if (subs.length == 0){
 			refreshSub(null);
 		} else {
@@ -54,7 +48,7 @@ $(document).on("mouseleave", ".sub", function(){
 // Dropdown submit
 $("#select-sort").change(function() { 	
 	options.sort = $("#select-sort").find(":selected").val();
-	refreshSub(sub);
+	refreshSub();
 });
 
 // Pic info box show
@@ -68,16 +62,16 @@ $(document).on("mouseleave", ".picbox", function(){
 });
 
 // Auto-loader
-$("#gallery").scroll(function(){
-	if ($('.load-more').visible(true)){
-		getItems(sub);
-	}
-});
+// $("#gallery").scroll(function(){
+// 	if ($('.load-more').visible(true)){
+// 		getItems(sub);
+// 	}
+// });
 
 // Load more button (in case auto-loader doesn't work)
 $(document).on("click", ".load-more", function(){	
 	if (state.events == 1){
-		getItems(sub);
+		getItems();
 	}
 });
 

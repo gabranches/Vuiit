@@ -68,10 +68,34 @@
 				</div>
 				<div id="gallery" class="col-xs-10">
 					<div class="row">
-						<div id="col-1-wrapper" class='col-xs-3 col'><div id='col-1'></div><div class='text-center load-button-wrapper'></div></div>
-						<div id="col-2-wrapper" class='col-xs-3 col'><div id='col-2'></div><div class='text-center load-button-wrapper'></div></div>
-						<div id="col-3-wrapper" class='col-xs-3 col'><div id='col-3'></div><div class='text-center load-button-wrapper'></div></div>
-						<div id="col-4-wrapper" class='col-xs-3 col'><div id='col-4'></div><div class='text-center load-button-wrapper'></div></div>
+						<div id="col-1-wrapper" class='col-xs-3 col'>
+							<div id='col-1'>
+							</div>
+							<div class='text-center load-button-wrapper'>
+								<button type='button' class='load-more btn btn-default'>Load More...</button>
+							</div>
+						</div>
+						<div id="col-2-wrapper" class='col-xs-3 col'>
+							<div id='col-2'>
+							</div>
+							<div class='text-center load-button-wrapper'>
+								<button type='button' class='load-more btn btn-default'>Load More...</button>
+							</div>
+						</div>
+						<div id="col-3-wrapper" class='col-xs-3 col'>
+							<div id='col-3'>
+							</div>
+							<div class='text-center load-button-wrapper'>
+								<button type='button' class='load-more btn btn-default'>Load More...</button>
+							</div>
+						</div>
+						<div id="col-4-wrapper" class='col-xs-3 col'>
+							<div id='col-4'>
+							</div>
+							<div class='text-center load-button-wrapper'>
+								<button type='button' class='load-more btn btn-default'>Load More...</button>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -94,12 +118,32 @@
 {% raw %}
 
  <script id="simple-template" type="text/x-handlebars-template">
-	<div class="picbox">
+	<div class="row picbox">
 		<a style="{{thumbnailHelper}}" target="_blank" href="{{data.url}}"><img src="{{{picHelper data}}}" /></a>
-		<div class="col-xs-12 {{data.display}}" >
+		<div class="col-xs-12 infobox" >
 			<div class="row">
 				<div class="col-xs-12">
 					<a id="extlink" href="http://www.reddit.com{{data.permalink}}" target="_blank">{{formatTitle data}}</a>
+				</div>
+			</div>
+			<div class="row subreddit">
+				<div class="col-xs-12">
+					<a href="/r/{{data.subreddit}}"><small>{{data.subreddit}}</small></a>
+					<small><span class="glyphicon glyphicon-arrow-up"></span> {{data.ups}}</small>
+					<small><span class="glyphicon glyphicon-comment"></span></a>{{data.num_comments}}</small>
+				</div>
+			</div>
+		</div>
+	</div>
+ </script>
+
+
+ <script id="info-template" type="text/x-handlebars-template">
+ 	<div class='row'>
+		<div class="col-xs-12 infobox-nojs" >
+			<div class="row">
+				<div class="col-xs-12">
+					<a id="extlink" href="http://www.reddit.com{{data.permalink}}" target="_blank">{{data.title}}</a>
 				</div>
 			</div>
 			<div class="row subreddit">
@@ -138,46 +182,50 @@ $(document).ready(function() {
 	options = {
 		sort:"hot",
 		limit: 80,
-		text_limit: 60
+		text_limit: 60,
+		show_text: true
 	}
+
 	// State variables
 	state = {
 		events: 1,
 		after: null,
 		count: 0,
 	}
+
 	// Determine which page the user is on
 	{% if sub is defined %} 
 		// Sub Page
 		$(".sub-pg").show();
-		sub = '{{sub}}'
+		subs = ['{{sub}}'];
+		state.page = "sub";
 	{% elif link is defined %} 
 		// Shared link page
 		$(".link-pg").show();
-		sub = '{{link}}'
-		subs = sub.split('+')
+		subs = '{{link}}'.split('+');
 		for (var i in subs){
 			addToSubList(subs[i]);
 		}
+		state.page = "link";
 	{% else %}
 		// Regular page
-		sub = null;
+		state.page = "main";
 		if (readCookie('subsCookie') != null){
 			// Read cookies
 			subs = readCookie('subsCookie').split(',');
 			for (var i in subs){
 				addToSubList(subs[i]);
 			}
-			sub = subs.join('+');
 		} else {
 			subs = [];
 		}
 		$(".main-pg").show();
+
 	{% endif %}
+
 	// Run
 	resize();
-	getItems(sub);
-	addLoadMoreButton();
+	getItems();
 });
 </script>
 
