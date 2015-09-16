@@ -204,7 +204,8 @@ $(document).ready(function() {
 		sort:"hot",
 		limit: 80,
 		text_limit: 60,
-		show_text: false
+		show_text: false,
+		show_nsfw: false
 	}
 
 	// State variables
@@ -249,7 +250,6 @@ $(document).ready(function() {
 
 	{% endif %}
 
-	// Run
 	if (readCookie('options')!= null){
 		loadCookies();
 	}

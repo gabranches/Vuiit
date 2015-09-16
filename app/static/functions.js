@@ -170,13 +170,20 @@ function listItems(json){
  
 	$.each(json.data.children, function(i, element){ // Iterate through JSON object
 
+
 		if (element.length == 0){
 			$(".load-button-wrapper").hide();
 		}
 
+
 		if(element.data.thumbnail == "nsfw"){
 			element.data.thumbnail = "/static/images/nsfw.png";
+			if (options.show_nsfw == false) {
+				return true;
+			}
 		}
+		
+		
 		// Determine in which column to place the next picture
 		var cur_col = (state.count % 4) + 1;
 		var placeHolder = $("#col-"+cur_col);
