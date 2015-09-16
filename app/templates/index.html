@@ -40,6 +40,11 @@
 							<input type="input" class="form-control" id="input-sub" placeholder="Enter a Subreddit">
 						</div>
 					 </div>
+					<div class="row link-pg">
+						<div class="col-xs-12">
+							<span id="gallery-name"></span>
+						</div>
+					</div>
 					 <div class="row main-pg link-pg">
 
 					 	<div id="sub-list" class="col-xs-12">
@@ -241,6 +246,7 @@ $(document).ready(function() {
 		}
 		state.page = "link";
 		state.gallery_name = '{{name}}'
+		$("#gallery-name").append(state.gallery_name);
 	{% else %}
 		// Regular page
 		state.page = "main";
