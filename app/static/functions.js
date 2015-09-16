@@ -31,8 +31,9 @@ function addSub(sub){
 			$(".share-button-wrapper").show();
 			$(".share-result").hide();
 			$("#front-page-label").hide();
-
 		}
+		$("#input-sub").val('');
+		$("#input-sub").attr("placeholder","Enter a Subreddit");
 	}
 }
 
@@ -49,8 +50,6 @@ function removeSub(sub){
 	}
 	$(".share-result").hide();
 	refreshSub();
-	
-
 }
 
 function addToSubList(sub){

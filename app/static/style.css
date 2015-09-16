@@ -87,19 +87,9 @@ a:hover{
 	margin-left:5px;
 	margin-right:5px;
 }
-#main{
-	color:white;
-}
-.glyphicon-home{
+#main { color:white; }
+.glyphicon-home { vertical-align: middle; }
+.options { margin-top:15px; }
+#active-subs-label {	margin-left:-20px; }
+#front-page-label {	display:none; }
 
-	vertical-align: middle;
-}
-.options{
-	margin-top:15px;
-}
-#active-subs-label{
-	margin-left:-20px;
-}
-#front-page-label{
-	display:none;
-}

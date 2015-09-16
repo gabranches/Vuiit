@@ -2,6 +2,7 @@ from app import app, db
 from flask import render_template, request
 import url_shortener
 from app.models import Url
+import get_subs
 
 import requests
 import json

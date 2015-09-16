@@ -9,9 +9,6 @@ $("#input-sub").focus(function() {
 $("#input-sub").keypress(function (e) {
 	if (e.which == 13) {
 		addSub($("#input-sub").val());
-		refreshSub(subs.join('+'));
-		$("#input-sub").val('');
-		$("#input-sub").attr("placeholder","Enter a Subreddit");
 	}
 });
 
@@ -61,13 +58,17 @@ $(document).on("click", ".remove-button", function(){
 	if (state.events == 1){
 		removeSub($(this).attr('sub-id'));
 		$(this).parent().remove();
-		if (subs.length == 0){
-			refreshSub(null);
-		} else {
-			refreshSub(subs.join('+'));
-		}
 	}
 });
+
+// Autocomplete
+$('#input-sub').typeahead({
+	onSelect: function(item) {
+        addSub(item.value);
+    },
+    ajax: '/static/suggestions.js'
+});
+           
 
 // Show Remove button
 $(document).on("mouseenter", ".sub", function(){  
