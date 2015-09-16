@@ -99,9 +99,6 @@
                     text: text
                 });
             }
-            this.$element
-                .val(this.attr('placeholder'))
-                .change();
             return this.hide();
         },
         updater: function (item) {

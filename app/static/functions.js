@@ -34,6 +34,7 @@ function addSub(sub){
 		}
 		$("#input-sub").val('');
 		$("#input-sub").attr("placeholder","Enter a Subreddit");
+		$(".dropdown-menu").hide();
 	}
 }
 

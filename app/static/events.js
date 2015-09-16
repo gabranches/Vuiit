@@ -13,16 +13,36 @@ $("#input-sub").keypress(function (e) {
 });
 
 // Add gallery name
-$("#share-name").keypress(function (e) {
-	if (e.which == 13) {
-		var name = $("#share-name").val();
-		$.ajax({
-			url: "/ajax/updatename?name=" + name + "&key=" + state.key,
-			success: function(data){
-	
-			}
-		});
-	}
+$("#update-button").click(function () {
+	var name = $("#share-name").val();
+	$("#update-button").hide();
+	$("#update-loader").show();
+	$.ajax({
+		url: "/ajax/updatename?name=" + name + "&key=" + state.key,
+		success: function(data){
+			$("#update-loader").hide();
+			$("#update-confirm").show();
+		}
+	});
+});
+
+// Show update button on change
+$("#share-name").focus(function(){
+	$("#update-confirm").hide();
+	$("#update-button").show();
+});
+
+// Mobile top menu
+$("#options-enter").click(function(){
+	$("#left-menu").attr("class", "col-xs-12");
+	$("#options-enter").hide();
+	$("#options-leave").show();
+});
+
+$("#options-leave").click(function(){
+	$("#left-menu").attr("class", "hidden-xs hidden-sm col-md-2 affix-top");
+	$("#options-enter").show();
+	$("#options-leave").hide();
 });
 
 // Goto sub
@@ -97,11 +117,13 @@ $(document).on("mouseleave", ".picbox", function(){
 });
 
 // Auto-loader
-// $("#gallery").scroll(function(){
-// 	if ($('.load-more').visible(true)){
-// 		getItems(sub);
-// 	}
-// });
+$('#gallery').on('scroll', function() {
+    if($(this).scrollTop() + $(this).innerHeight() >= this.scrollHeight - 500) {
+        if (state.events == 1){
+			getItems();
+		}
+    }
+});
 
 // Load more button (in case auto-loader doesn't work)
 $(document).on("click", ".load-more", function(){	

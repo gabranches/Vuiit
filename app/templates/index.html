@@ -15,7 +15,11 @@
 	<body>
 		<div id="main" class="container-fluid">
 			<div class="row">
-				<div id="left-menu" class="col-xs-2 affix-top">
+				<div id="top-menu" class='hidden-lg hidden-md col-xs-12 text-center affix-top'>
+					    <span id='options-enter'>Tap To Edit Subreddits</span>
+					    <span id='options-leave'>Tap To Return To Gallery</span>
+				</div>
+				<div id="left-menu" class="hidden-xs hidden-sm col-md-2 affix-top">
 					
 					<div class="row menu-top">
 					 	<div class="col-xs-12 sub-pg">
@@ -69,6 +73,11 @@
 							<div id="gallery-label"> Gallery address: </div>
 							<input type="text" class="form-control" id="share-link"><br />
 							<input type="text" class="form-control" id="share-name" placeholder="Gallery name (optional)">
+							<div class="menuitem col-xs-12 text-center update-button-wrapper">
+								<button id="update-button" type="button" class="btn btn-default">Update</button>
+								<img id="update-loader" src='/static/images/ajax-loader.gif' />
+								<span id="update-confirm">Saved!</span>
+							</div>
 						</div>
 					</div>
 					<div class="row options">
@@ -88,7 +97,8 @@
 						</div>
 					</div>
 				</div>
-				<div id="gallery" class="col-xs-10">
+				
+				<div id="gallery" class="col-xs-12 col-md-10">
 					<div class="row">
 						<div id="col-1-wrapper" class='col-xs-3 col'>
 							<div id='col-1'>
@@ -257,6 +267,7 @@ $(document).ready(function() {
 	resize();
 	getItems();
 });
+
 </script>
 
 <script src="/static/functions.js"></script>

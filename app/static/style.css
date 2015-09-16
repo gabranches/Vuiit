@@ -1,3 +1,8 @@
+html, body {
+  overflow: hidden;
+}
+
+
 body { 
 	background-color: #F2F2F2;
 }
@@ -24,6 +29,10 @@ body {
 .share-load{
 	display:none;
 }
+#update-loader, #update-confirm{
+	display:none;
+}
+
 .remove-button{
 	display:none;
 	color:red;
@@ -87,6 +96,18 @@ a:hover{
 	margin-left:5px;
 	margin-right:5px;
 }
+#top-menu{
+	color:black;
+	padding:10px;
+	font-weight: bold;
+}
+.glyphicon{
+	color:black;
+}
+#options-leave{
+	display:none;
+}
+
 #main { color:white; }
 .glyphicon-home { vertical-align: middle; }
 .options { margin-top:15px; }
