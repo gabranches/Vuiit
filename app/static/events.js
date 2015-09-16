@@ -119,7 +119,7 @@ $(document).on("click", "#share", function(){
 				$(".share-load").hide();
 				$(".share-result").show();
 				$(".share-button-wrapper").hide();
-				$("#share-link").val("http://127.0.0.1/g/" + data);				
+				$("#share-link").val("http://vast-reef-3750.herokuapp.com/g/" + data);				
 			}
 		});
 });
