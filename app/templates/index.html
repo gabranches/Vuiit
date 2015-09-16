@@ -36,7 +36,10 @@
 						</div>
 					 </div>
 					 <div class="row main-pg link-pg">
+
 					 	<div id="sub-list" class="col-xs-12">
+							<span id="active-subs-label"><label>Active Subreddits</label></span><br />
+							<span id="front-page-label">Front Page</span>
 						</div>
 					 </div>
 					 <div class="row">
@@ -67,7 +70,7 @@
 							<input type="text" class="form-control" id="share-name" placeholder="Gallery name (optional)">
 						</div>
 					</div>
-					<div class="row">
+					<div class="row options">
 						<div class="col-xs-12">
 						    <label>Options</label>
 						 
@@ -239,6 +242,10 @@ $(document).ready(function() {
 			subs = [];
 		}
 		$(".main-pg").show();
+		if (subs.length == 0){
+			$("#front-page-label").show();
+			$(".share-button-wrapper").hide();
+		}
 
 	{% endif %}
 

@@ -7,7 +7,7 @@ class Url(db.Model):
 	link = db.Column(db.String)
 	name = db.Column(db.String)
 
-	def __init__(self, key, link):
+	def __init__(self, key, link, name):
 		self.key = key
 		self.link = link
 		self.name = name

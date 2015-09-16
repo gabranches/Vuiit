@@ -30,6 +30,8 @@ function addSub(sub){
 			refreshSub();
 			$(".share-button-wrapper").show();
 			$(".share-result").hide();
+			$("#front-page-label").hide();
+
 		}
 	}
 }
@@ -40,10 +42,14 @@ function removeSub(sub){
 	createCookie('subsCookie', subs.join(','), 60);
 	if (subs.length == 0){
 		eraseCookie('subsCookie');
+		$("#front-page-label").show();
+		$(".share-button-wrapper").hide();
+	} else {
+		$(".share-button-wrapper").show();
 	}
-	refreshSub();
-	$(".share-button-wrapper").show();
 	$(".share-result").hide();
+	refreshSub();
+	
 
 }
 
@@ -58,6 +64,7 @@ function addToSubList(sub){
 			sub + '" class="row sub"><span class="sub-link">r/' +
 			sub + '</span></div>');
 	}
+	$(".share-button-wrapper").show();
 	
 }
 

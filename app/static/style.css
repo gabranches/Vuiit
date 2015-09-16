@@ -37,6 +37,7 @@ body {
 }
 .sub{
 	cursor: pointer;
+	margin-left:0px;
 }
 a:hover{
 	text-decoration:none;
@@ -92,4 +93,13 @@ a:hover{
 .glyphicon-home{
 
 	vertical-align: middle;
+}
+.options{
+	margin-top:15px;
+}
+#active-subs-label{
+	margin-left:-20px;
+}
+#front-page-label{
+	display:none;
 }

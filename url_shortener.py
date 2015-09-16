@@ -18,17 +18,20 @@ class KeyGenerator():
 
 	def write_to_db(self):
 		result = True
+		print "test"
 		while result is True:
 			try:
 				temp_key = self.generate_key()
 				result = self.check_key_in_db(temp_key)
+				print temp_key
 			except:
 				pass
 
-		entry = Url(temp_key, self.link)
+		entry = Url(temp_key, self.link, '')
 		db.session.add(entry)
 		db.session.commit()
 		self.key = temp_key
+
 
 	def update_name(self):
 		pass
@@ -50,7 +53,7 @@ class KeyGenerator():
 		return self.key
 
 	def check_key_in_db(self, temp_key):
-		url_obj = Url.query.filter_by(key=temp_key, name=self.name).first()
+		url_obj = Url.query.filter_by(key=temp_key).first()
 		if url_obj:
 			self.key = temp_key
 			return True

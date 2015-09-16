@@ -26,7 +26,7 @@ def updatename_ajax():
 	url_obj = Url.query.filter_by(key=request.args.get('key')).first()
 	url_obj.name = request.args.get('name')
 	db.session.commit()
-
+	return url_obj.name
 
 @app.route('/g/<key>')
 def share_page(key):
