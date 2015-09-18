@@ -38,6 +38,18 @@ function addSub(sub){
 	}
 }
 
+function removeAll(){
+	subs = [];
+	state.sub = '';
+	eraseCookie('subsCookie');
+	$("#front-page-label").show();
+	$("#remove-all").hide();
+	$(".share-button-wrapper").hide();
+	$(".share-result").hide();
+	$("#sub-names").empty();
+	refreshSub();
+}
+
 function removeSub(sub){
 	var index = subs.indexOf(sub);
 	subs.splice(index,1);
@@ -46,6 +58,7 @@ function removeSub(sub){
 		eraseCookie('subsCookie');
 		$("#front-page-label").show();
 		$(".share-button-wrapper").hide();
+		$("#remove-all").hide();
 	} else {
 		$(".share-button-wrapper").show();
 	}
@@ -55,17 +68,17 @@ function removeSub(sub){
 
 function addToSubList(sub){
 	if (state.page == "main") {
-		$("#sub-list").append('<div sub-id="' +
+		$("#sub-names").append('<div sub-id="' +
 			sub + '" class="row sub"><span class="sub-link">r/' +
 			sub + '</span> <span class="remove-button" sub-id="' +
 			sub + '"><small>[remove]</small></span></div>');
 	} else {
-		$("#sub-list").append('<div sub-id="' +
+		$("#sub-names").append('<div sub-id="' +
 			sub + '" class="row sub"><span class="sub-link">r/' +
 			sub + '</span></div>');
 	}
 	$(".share-button-wrapper").show();
-	
+	$("#remove-all").show();
 }
 
 function getItems(){
@@ -114,7 +127,11 @@ function getItems(){
 		state.events = 1;
 		state.url = url;
 		listItems(data);
-		$(".load-button-wrapper").show();
+		if (state.last_page == true) {
+			$(".load-button-wrapper").hide();
+		} else {
+			$(".load-button-wrapper").show();
+		}
 	}).fail(function(){
 		window.alert("Could not fetch data. Please check that the subreddits are valid.");
 		state.events = 1;
@@ -127,7 +144,6 @@ function whichColumn(){
 	var c2 = cols['col-2'];
 	var c3 = cols['col-3'];
 	var c4 = cols['col-4'];
-
 	var c_name = ['1','2','3','4']
 	var c_height = [c1,c2,c3,c4];
 	var min_height = 0;
@@ -167,14 +183,12 @@ function listItems(json){
 	var pic_template = Handlebars.compile(raw_template);
 	var raw_template = $('#info-template').html();
 	var info_template = Handlebars.compile(raw_template);
+
+	if (json.data.after == null){
+		state.last_page = true;
+	}
  
 	$.each(json.data.children, function(i, element){ // Iterate through JSON object
-
-
-		if (element.length == 0){
-			$(".load-button-wrapper").hide();
-		}
-
 
 		if(element.data.thumbnail == "nsfw"){
 			element.data.thumbnail = "/static/images/nsfw.png";
@@ -183,22 +197,18 @@ function listItems(json){
 			}
 		}
 		
-		
 		// Determine in which column to place the next picture
 		var cur_col = (state.count % 4) + 1;
 		var placeHolder = $("#col-"+cur_col);
 		element.data.col = "col-" + cur_col;
 
 		if(element.data.thumbnail == 'self' || element.data.thumbnail == 'default' || element.data.thumbnail == ''){
-			
-
 			if(options.show_text == true){
 				if (element.data.stickied == false){
 					var html = info_template(element); // Generate the HTML for each post
 					placeHolder.append(html); // Render the posts into the page
 				}
 			}
-				
 		} else {
 			if (element.data.stickied == false){
 				var html = pic_template(element); // Generate the HTML for each post

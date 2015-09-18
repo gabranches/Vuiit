@@ -1,281 +1,166 @@
 <!DOCTYPE html>
-
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-		<link rel="stylesheet" href="/static/style.css">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-		<script src="/static/handlebars-v2.0.0.js"></script>
-		<script src="/static/jquery.visible.min.js"></script>
-		<script src="/static/bootstrap-typeahead.js"></script>
-	</head>
-	<body>
-		<div id="main" class="container-fluid">
-			<div class="row">
-				<div id="top-menu" class='hidden-lg hidden-md col-xs-12 text-center affix-top'>
-					    <span id='options-enter'>Tap To Edit Subreddits</span>
-					    <span id='options-leave'>Tap To Return To Gallery</span>
-				</div>
-				<div id="left-menu" class="hidden-xs hidden-sm col-md-2 affix-top">
-					
-					<div class="row menu-top">
-					 	<div class="col-xs-12 sub-pg">
-							Browsing <strong>r/{{sub}}</strong>
-						</div>
-						<div class="col-xs-12 link-pg">
-							Browsing a shared gallery
-						</div>
-						<div class="col-xs-12 sub-pg link-pg">
-							<a href="/">Back to main page</a>
-						</div>
-						<div class="col-xs-12 main-pg">
-							Enter a subreddit below and it will be added to the gallery</a>
-						</div>
-					</div>
-					 <div class="row main-pg">
-					 	<div class="col-xs-12">
-							<input type="input" class="form-control" id="input-sub" placeholder="Enter a Subreddit">
-						</div>
-					 </div>
-					<div class="row link-pg">
-						<div class="col-xs-12">
-							<span id="gallery-name"></span>
-						</div>
-					</div>
-					 <div class="row main-pg link-pg">
+  <head>
+  	<title>Reddit Image Viewer</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+  </head>
+  <body>
+    <div id="main" class="container-fluid">
+      <div class="row">
+      	<!-- Top Menu (Mobile) -->
+        <div id="top-menu" class="hidden-lg hidden-md col-xs-12 text-center affix-top">
+          <span id="options-enter">Tap To Edit Subreddits</span>
+          <span id="options-leave">Tap To Return To Gallery</span>
+        </div>
+				<!-- Left Menu -->
+        <div id="left-menu" class="hidden-xs hidden-sm col-md-2 affix-top">
+          <div class="row menu-top">
+            <div class="col-xs-12 sub-pg">
+              Browsing <strong>r/{{sub}}</strong>
+            </div>
 
-					 	<div id="sub-list" class="col-xs-12">
-							<span id="active-subs-label"><label>Active Subreddits</label></span><br />
-							<span id="front-page-label">Front Page</span>
-						</div>
-					 </div>
-					 <div class="row">
-						<div class="col-xs-12">
-							<select id="select-sort" class="form-control">
-							    <option selected="selected" disabled>Sort by:</option>
-							    <option value="hot">hot</option>
-							    <option value="new">new</option>
-							    <option value="day">top today</option>
-							    <option value="week">top this week</option>
-							    <option value="month">top this month</option>
-							    <option value="year">top this year</option>]
-							    <option value="all">top all time</option>
-							</select>
-						</div>
-					</div>
-					<div class="row main-pg">
-						<div class="menuitem col-xs-12 text-center share-button-wrapper">
-							<button id="share" type="button" class="btn btn-default">Share this Gallery</button>
-						</div>
-						<div class="share-load menuitem col-xs-12 text-center">
-							<img src='/static/images/ajax-loader.gif' />
-						</div>
-						<div class="share-result menuitem col-xs-12">
-							
-							<div id="gallery-label"> Gallery address: </div>
-							<input type="text" class="form-control" id="share-link"><br />
-							<input type="text" class="form-control" id="share-name" placeholder="Gallery name (optional)">
-							<div class="menuitem col-xs-12 text-center update-button-wrapper">
-								<button id="update-button" type="button" class="btn btn-default">Update</button>
-								<img id="update-loader" src='/static/images/ajax-loader.gif' />
-								<span id="update-confirm">Saved!</span>
-							</div>
-						</div>
-					</div>
-					<div class="row options">
-						<div class="col-xs-12">
-						    <label>Options</label>
-						 
-						  <div class="checkbox">
-						    <label>
-						      <input id="options-text" type="checkbox"> Show text posts
-						    </label>
-						  </div>
-						  <div class="checkbox">
-						    <label>
-						      <input id="options-nsfw" type="checkbox"> Show NSFW posts
-						    </label>
-						  </div>
-						</div>
-					</div>
-				</div>
-				
-				<div id="gallery" class="col-xs-12 col-md-10">
-					<div class="row">
-						<div id="col-1-wrapper" class='col-xs-3 col'>
-							<div id='col-1'>
-							</div>
-							<div class='text-center load-button-wrapper'>
-								<button type='button' class='load-more btn btn-default'>Load More...</button>
-							</div>
-						</div>
-						<div id="col-2-wrapper" class='col-xs-3 col'>
-							<div id='col-2'>
-							</div>
-							<div class='text-center load-button-wrapper'>
-								<button type='button' class='load-more btn btn-default'>Load More...</button>
-							</div>
-						</div>
-						<div id="col-3-wrapper" class='col-xs-3 col'>
-							<div id='col-3'>
-							</div>
-							<div class='text-center load-button-wrapper'>
-								<button type='button' class='load-more btn btn-default'>Load More...</button>
-							</div>
-						</div>
-						<div id="col-4-wrapper" class='col-xs-3 col'>
-							<div id='col-4'>
-							</div>
-							<div class='text-center load-button-wrapper'>
-								<button type='button' class='load-more btn btn-default'>Load More...</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+            <div class="col-xs-12 link-pg">
+              Browsing a shared gallery
+            </div>
 
-		<!--Start Google Analytics-->
+            <div class="col-xs-12 sub-pg link-pg">
+              <a href="/">Back to main page</a>
+            </div>
 
-		<script>
-		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-		  ga('create', 'UA-53022536-1', 'auto');
-		  ga('require', 'displayfeatures');
-		  ga('send', 'pageview');
-		</script>
-	</body>
+            <div class="col-xs-12 main-pg">
+              Enter a subreddit below and it will be added to the gallery</a>
+            </div>
+          </div>
+
+          <div class="row main-pg">
+            <div class="col-xs-12">
+              <input type="input" class="form-control" id="input-sub" placeholder="Enter a Subreddit">
+            </div>
+          </div>
+
+          <div class="row link-pg">
+            <div class="col-xs-12">
+              <span id="gallery-name"></span>
+            </div>
+          </div>
+          
+          <div class="row main-pg link-pg">
+             <div id="sub-list" class="col-xs-12">
+              <span id="active-subs-label"><label>Active Subreddits</label></span><br />
+              <span id="front-page-label">Front Page</span>
+              <span id="sub-names"></span>
+             </div>
+          </div>
+          
+          <div class="menuitem row" id="remove-all">
+            <div class="col-xs-12">
+              <small>remove all subreddits</small>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12">
+              <select id="select-sort" class="form-control">
+                <option selected="selected" disabled>Sort by:</option>
+                <option value="hot">hot</option>
+                <option value="new">new</option>
+                <option value="day">top today</option>
+                <option value="week">top this week</option>
+                <option value="month">top this month</option>
+                <option value="year">top this year</option>]
+                <option value="all">top all time</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row main-pg">
+            <div class="menuitem col-xs-12 text-center share-button-wrapper">
+              <button id="share" type="button" class="btn btn-default">Share this Gallery</button>
+            </div>
+
+            <div class="share-load menuitem col-xs-12 text-center">
+              <img src='/static/images/ajax-loader.gif' />
+            </div>
+
+            <div class="share-result menuitem col-xs-12">
+              <div id="gallery-label"> Gallery address: </div>
+              <input type="text" class="form-control" id="share-link"><br />
+              <input type="text" class="form-control" id="share-name" placeholder="Gallery name (optional)">
+              <div class="menuitem col-xs-12 text-center update-button-wrapper">
+                <button id="update-button" type="button" class="btn btn-default">Update</button>
+                <img id="update-loader" src='/static/images/ajax-loader.gif' />
+                <span id="update-confirm">Saved!</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row options">
+            <div class="col-xs-12">
+              <label>Options</label>
+              <div class="checkbox">
+                <label>
+                  <input id="options-text" type="checkbox"> Show text posts
+                </label>
+              </div>
+
+              <div class="checkbox">
+                <label>
+				  				<input id="options-nsfw" type="checkbox"> Show NSFW posts
+								</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Main Gallery -->
+        <div id="gallery" class="col-xs-12 col-md-10">
+          <div class="row">
+            <div id="col-1-wrapper" class="col-xs-3 col">
+              <div id="col-1">
+              </div>
+              <div class="text-center load-button-wrapper">
+                <button type="button" class="load-more btn btn-default">Load More...</button>
+              </div>
+            </div>
+            <div id="col-2-wrapper" class="col-xs-3 col">
+              <div id="col-2">
+              </div>
+              <div class="text-center load-button-wrapper">
+                <button type="button" class="load-more btn btn-default">Load More...</button>
+              </div>
+            </div>
+            <div id="col-3-wrapper" class="col-xs-3 col">
+              <div id="col-3">
+              </div>
+              <div class="text-center load-button-wrapper">
+                <button type="button" class="load-more btn btn-default">Load More...</button>
+              </div>
+            </div>
+            <div id="col-4-wrapper" class="col-xs-3 col">
+              <div id="col-4">
+              </div>
+              <div class="text-center load-button-wrapper">
+                <button type='button' class='load-more btn btn-default'>Load More...</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
 
-{% raw %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="/static/libs/handlebars-v2.0.0.js"></script>
+<script src="/static/libs/jquery.visible.min.js"></script>
+<script src="/static/libs/bootstrap-typeahead.js"></script>
+<script src="/static/js/handlebars_helpers.js"></script>
+<script src="/static/js/functions.js"></script>
+<script src="/static/js/events.js"></script>
+<script src="/static/js/cookies.js"></script>
 
- <script id="simple-template" type="text/x-handlebars-template">
-	<div class="row picbox">
-		<a style="{{thumbnailHelper}}" target="_blank" href="{{data.url}}"><img src="{{{picHelper data}}}" /></a>
-		<div class="col-xs-12 infobox" >
-			<div class="row">
-				<div class="col-xs-12">
-					<a id="extlink" href="http://www.reddit.com{{data.permalink}}" target="_blank">{{formatTitle data}}</a>
-				</div>
-			</div>
-			<div class="row subreddit">
-				<div class="col-xs-12">
-					<a href="/r/{{data.subreddit}}"><small>{{data.subreddit}}</small></a>
-					<small><span class="glyphicon glyphicon-arrow-up"></span> {{data.ups}}</small>
-					<small><span class="glyphicon glyphicon-comment"></span></a>{{data.num_comments}}</small>
-				</div>
-			</div>
-		</div>
-	</div>
- </script>
-
-
- <script id="info-template" type="text/x-handlebars-template">
- 	<div class='row'>
-		<div class="col-xs-12 infobox-nojs" >
-			<div class="row">
-				<div class="col-xs-12">
-					<a id="extlink" href="http://www.reddit.com{{data.permalink}}" target="_blank">{{data.title}}</a>
-				</div>
-			</div>
-			<div class="row subreddit">
-				<div class="col-xs-12">
-					<a href="/r/{{data.subreddit}}"><small>{{data.subreddit}}</small></a>
-					<small><span class="glyphicon glyphicon-arrow-up"></span> {{data.ups}}</small>
-					<small><span class="glyphicon glyphicon-comment"></span></a>{{data.num_comments}}</small>
-				</div>
-			</div>
-		</div>
-	</div>
- </script>
-
- {% endraw %}
-
-<script id="source" language="javascript" type="text/javascript">
-
-// ---- Handlebars Helpers
-
-Handlebars.registerHelper("formatTitle", function(data){
-	return (data.title.length > options.text_limit) ? data.title.substring(0, options.text_limit) + "..." : data.title;
-});
-
-Handlebars.registerHelper("picHelper", function(data){
-	if ('preview' in data && data['preview']['images'][0]['resolutions'].length > 1) {
-		//cols[data.col] += data['preview']['images'][0]['resolutions'][1]['height'];
-		return data['preview']['images'][0]['resolutions'][1]['url'];
-	} else {
-		//cols[data.col] += 105;
-		return data['thumbnail'];
-	}
-});
-
-$(document).ready(function() { 
-	// User options
-	options = {
-		sort:"hot",
-		limit: 80,
-		text_limit: 60,
-		show_text: false,
-		show_nsfw: false
-	}
-
-	// State variables
-	state = {
-		events: 1,
-		after: null,
-		count: 0,
-	}
-
-	// Determine which page the user is on
-	{% if sub is defined %} 
-		// Sub Page
-		$(".sub-pg").show();
-		subs = ['{{sub}}'];
-		state.page = "sub";
-	{% elif link is defined %} 
-		// Shared link page
-		$(".link-pg").show();
-		subs = '{{link}}'.split('+');
-		for (var i in subs){
-			addToSubList(subs[i]);
-		}
-		state.page = "link";
-		state.gallery_name = '{{name}}'
-		$("#gallery-name").append(state.gallery_name);
-	{% else %}
-		// Regular page
-		state.page = "main";
-		if (readCookie('subsCookie') != null){
-			// Read cookies
-			subs = readCookie('subsCookie').split(',');
-			for (var i in subs){
-				addToSubList(subs[i]);
-			}
-		} else {
-			subs = [];
-		}
-		$(".main-pg").show();
-		if (subs.length == 0){
-			$("#front-page-label").show();
-			$(".share-button-wrapper").hide();
-		}
-
-	{% endif %}
-
-	if (readCookie('options')!= null){
-		loadCookies();
-	}
-	resize();
-	getItems();
-});
-
-</script>
-
-<script src="/static/functions.js"></script>
-<script src="/static/events.js"></script>
-<script src="/static/cookies.js"></script>
+{% include "handlebars.html" %}
+{% include "document_ready.html" %}

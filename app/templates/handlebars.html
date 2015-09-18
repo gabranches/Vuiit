@@ -1,0 +1,44 @@
+{% raw %}
+
+<script id="simple-template" type="text/x-handlebars-template">
+  <div class="row picbox">
+    <a style="{{thumbnailHelper}}" target="_blank" href="{{data.url}}"><img src="{{{picHelper data}}}" /></a>
+    <div class="col-xs-12 infobox" >
+      <div class="row">
+        <div class="col-xs-12">
+          <a id="extlink" href="http://www.reddit.com{{data.permalink}}" target="_blank">{{formatTitle data}}</a>
+        </div>
+      </div>
+
+      <div class="row subreddit">
+        <div class="col-xs-12">
+          <a href="/r/{{data.subreddit}}"><small>{{data.subreddit}}</small></a>
+          <small><span class="glyphicon glyphicon-arrow-up"></span> {{data.ups}}</small>
+          <small><span class="glyphicon glyphicon-comment"></span></a>{{data.num_comments}}</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
+
+<script id="info-template" type="text/x-handlebars-template">
+  <div class='row'>
+    <div class="col-xs-12 infobox-nojs" >
+      <div class="row">
+        <div class="col-xs-12">
+          <a id="extlink" href="http://www.reddit.com{{data.permalink}}" target="_blank">{{data.title}}</a>
+        </div>
+      </div>
+
+      <div class="row subreddit">
+        <div class="col-xs-12">
+          <a href="/r/{{data.subreddit}}"><small>{{data.subreddit}}</small></a>
+          <small><span class="glyphicon glyphicon-arrow-up"></span> {{data.ups}}</small>
+          <small><span class="glyphicon glyphicon-comment"></span></a>{{data.num_comments}}</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>
+
+{% endraw %}

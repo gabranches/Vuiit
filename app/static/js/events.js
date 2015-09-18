@@ -26,6 +26,11 @@ $("#update-button").click(function () {
 	});
 });
 
+// Remove all subs
+$(document).on("click", "#remove-all", function(){
+	removeAll();
+});
+
 // Show update button on change
 $("#share-name").focus(function(){
 	$("#update-confirm").hide();
@@ -118,7 +123,7 @@ $(document).on("mouseleave", ".picbox", function(){
 
 // Auto-loader
 $('#gallery').on('scroll', function() {
-    if($(this).scrollTop() + $(this).innerHeight() >= this.scrollHeight - 500) {
+    if($(this).scrollTop() + $(this).innerHeight() >= ($(this).scrollTop() + $(this).innerHeight()) - $(this).scrollTop() * .25) {
         if (state.events == 1){
 			getItems();
 		}

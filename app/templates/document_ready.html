@@ -1,0 +1,62 @@
+<script>
+$(document).ready(function() { 
+	// User options
+	options = {
+		sort:"hot",
+		limit: 80,
+		text_limit: 60,
+		show_text: false,
+		show_nsfw: false
+	}
+
+	// State variables
+	state = {
+		events: 1,
+		after: null,
+		count: 0,
+		last_page: false
+	}
+
+	// Determine which page the user is on
+	{% if sub is defined %} 
+		// Sub Page
+		$(".sub-pg").show();
+		subs = ['{{sub}}'];
+		state.page = "sub";
+	{% elif link is defined %} 
+		// Shared link page
+		$(".link-pg").show();
+		subs = '{{link}}'.split('+');
+		for (var i in subs){
+			addToSubList(subs[i]);
+		}
+		state.page = "link";
+		state.gallery_name = '{{name}}'
+		$("#gallery-name").append(state.gallery_name);
+	{% else %}
+		// Regular page
+		state.page = "main";
+		if (readCookie('subsCookie') != null){
+			// Read cookies
+			subs = readCookie('subsCookie').split(',');
+			for (var i in subs){
+				addToSubList(subs[i]);
+			}
+		} else {
+			subs = [];
+		}
+		$(".main-pg").show();
+		if (subs.length == 0){
+			$("#front-page-label").show();
+			$(".share-button-wrapper").hide();
+		}
+
+	{% endif %}
+
+	if (readCookie('options')!= null){
+		loadCookies();
+	}
+	resize();
+	getItems();
+});
+</script>
