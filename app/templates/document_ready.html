@@ -37,6 +37,14 @@ $(document).ready(function() {
 		$(".sub-pg").show();
 		subs = ['{{sub}}'];
 		state.page = "sub";
+	{% elif subs is defined %} 
+		// My Subreddits page (logged in)
+		$(".mysubs-pg").show();
+		subs = '{{subs}}'.split(',');
+		state.page = "mysubs";
+		for (var i in subs){
+			addToSubList(subs[i]);
+		}
 	{% elif link is defined %} 
 		// Shared link page
 		$(".link-pg").show();

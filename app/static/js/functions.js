@@ -43,7 +43,6 @@ function removeAll(){
 	state.sub = '';
 	eraseCookie('subsCookie');
 	$("#front-page-label").show();
-	$("#remove-all").hide();
 	$(".share-button-wrapper").hide();
 	$(".share-result").hide();
 	$("#sub-names").empty();
@@ -58,7 +57,6 @@ function removeSub(sub){
 		eraseCookie('subsCookie');
 		$("#front-page-label").show();
 		$(".share-button-wrapper").hide();
-		$("#remove-all").hide();
 	} else {
 		$(".share-button-wrapper").show();
 	}
@@ -78,7 +76,6 @@ function addToSubList(sub){
 			sub + '</span></div>');
 	}
 	$(".share-button-wrapper").show();
-	$("#remove-all").show();
 }
 
 function getItems(){
