@@ -1,12 +1,17 @@
 from app import app, db
-from flask import render_template, request
+from flask import render_template, request, redirect, session
 import url_shortener
 from app.models import Url
 import get_subs
 
 import requests
+import requests.auth
 import json
 
+CLIENT_ID = "mGEGfnX8-v9_TQ"
+CLIENT_SECRET = "LHRakhCrm1KC1GNFx07q7VBhQIw"
+REDIRECT_URI = "http://127.0.0.1:5000/mysubreddits"
+app.secret_key = "asdfas9d87987asf09asdf78089as3,,3???"
 
 @app.route('/')
 def index():
@@ -35,3 +40,59 @@ def share_page(key):
 	link = url_obj.link.replace(',', '+')
 	name = url_obj.name.replace(',', '+')
 	return render_template('index.html', link=str(link), name=str(name))
+
+@app.route('/login')
+def reddit_login():
+	return redirect(create_auth_url()) 
+
+@app.route('/mysubreddits')
+def load_mysubreddits():
+	error = request.args.get('error', '')
+	if error:
+		return "Error: " + error
+	code = request.args.get('code')
+	if session.get('token'):
+		access_token = session.get('token')
+	else:
+		access_token = get_token(code)
+
+	return render_template('index.html', subs=get_subscribed_subs(access_token))
+
+def create_auth_url():
+	from uuid import uuid4
+	state = str(uuid4())
+	params = {"client_id": CLIENT_ID,
+				"response_type": "code",
+				"state": state,
+				"redirect_uri": REDIRECT_URI,
+				"duration": "permanent",
+				"scope": "mysubreddits"}
+	import urllib
+	url = "https://ssl.reddit.com/api/v1/authorize?" + urllib.urlencode(params)
+	return url
+
+def get_token(code):
+	client_auth = requests.auth.HTTPBasicAuth(CLIENT_ID, CLIENT_SECRET)
+	post_data = {"grant_type": "authorization_code",
+					"code": code,
+					"redirect_uri": REDIRECT_URI}
+	response = requests.post("https://ssl.reddit.com/api/v1/access_token",
+								auth=client_auth,
+								data=post_data,
+								headers = { 'User-Agent' : 'image-viewer by /u/gabranches' }
+								)
+	token_json = response.json()
+	session['token'] = token_json["access_token"]
+	return session['token']
+
+def get_subscribed_subs(access_token):
+	headers = {"Authorization": "bearer " + access_token, 'User-Agent' : 'image-viewer by /u/gabranches' }
+	response = requests.get("https://oauth.reddit.com/subreddits/mine/subscriber/.json?limit=100", headers=headers)
+	data = json.loads(response.content)
+	subs = []
+	for sub in data['data']['children']:
+		subs.append(str(sub['data']['display_name']))
+	return ",".join(subs).lower()
+
+
+

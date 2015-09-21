@@ -26,7 +26,8 @@ html, body {
 
 .main-pg, 
 .sub-pg, 
-.link-pg {
+.link-pg,
+.mysubs-pg {
   display:none;
 }
 
@@ -62,7 +63,6 @@ html, body {
 #remove-all {
   color: #800000;
   cursor: pointer;
-  display: none;
 }
 
 .remove-button {

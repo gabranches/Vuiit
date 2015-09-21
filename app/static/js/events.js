@@ -123,7 +123,7 @@ $(document).on("mouseleave", ".picbox", function(){
 
 // Auto-loader
 $('#gallery').on('scroll', function() {
-    if($(this).scrollTop() + $(this).innerHeight() >= ($(this).scrollTop() + $(this).innerHeight()) - $(this).scrollTop() * .25) {
+    if($(this).scrollTop() + $(this).innerHeight() >= (getMaxColumnHeight() * .80)) {
         if (state.events == 1){
 			getItems();
 		}

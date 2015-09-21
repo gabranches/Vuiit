@@ -11,10 +11,24 @@ $(document).ready(function() {
 
 	// State variables
 	state = {
-		events: 1,
-		after: null,
-		count: 0,
-		last_page: false
+		"events": 1,
+		"after": null,
+		"count": 0,
+		"last_page": false,
+		"columns": {
+			"1": {
+				"height": 0
+			},
+			"2": {
+				"height": 0
+			},
+			"3": {
+				"height": 0
+			},
+			"4": {
+				"height": 0
+			}
+		}
 	}
 
 	// Determine which page the user is on
@@ -23,6 +37,14 @@ $(document).ready(function() {
 		$(".sub-pg").show();
 		subs = ['{{sub}}'];
 		state.page = "sub";
+	{% elif subs is defined %} 
+		// My Subreddits page (logged in)
+		$(".mysubs-pg").show();
+		subs = '{{subs}}'.split(',');
+		state.page = "mysubs";
+		for (var i in subs){
+			addToSubList(subs[i]);
+		}
 	{% elif link is defined %} 
 		// Shared link page
 		$(".link-pg").show();
