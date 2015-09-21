@@ -138,24 +138,26 @@ function getItems(){
 	});
 }
 
-function whichColumn(){
-	// Returns the shortest columns
-	var c1 = cols['col-1'];
-	var c2 = cols['col-2'];
-	var c3 = cols['col-3'];
-	var c4 = cols['col-4'];
-	var c_name = ['1','2','3','4']
-	var c_height = [c1,c2,c3,c4];
-	var min_height = 0;
-	var min_name = '1';
-
-	for (i = 0; i < c_name.length; i ++){
-		if (c_height[i] < min_height){
-			min_name = c_name[i];
-		}
-		min_height = c_height[i];
+function setColumnHeights(){
+	for (i=1; i<5; i++) {
+		state['columns'][i]['height'] = 0;
 	}
-	return min_name;
+
+	for (i=1; i<5; i++) {
+		$("#col-" + i + "-wrapper").children().each(function(){
+			state['columns'][i]['height'] += $(this).innerHeight();
+		})
+	}
+}
+
+function getMaxColumnHeight(){
+	setColumnHeights();
+	return Math.max(
+		state['columns']['1']['height'],
+		state['columns']['2']['height'],
+		state['columns']['3']['height'],
+		state['columns']['4']['height'] 
+	);
 }
 
 function loadCookies(){
