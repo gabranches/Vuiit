@@ -91,7 +91,7 @@ $('#input-sub').typeahead({
 	onSelect: function(item) {
         addSub(item.value);
     },
-    ajax: '/static/suggestions.js'
+    ajax: '/static/js/suggestions.js'
 });
            
 
