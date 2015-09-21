@@ -56,6 +56,11 @@ $(document).on("click", ".sub-link", function(){
 	window.location.href = '/r/' + sublink;	
 });
 
+// Edit gallery
+$(document).on("click", "#edit-gallery", function(){
+	editGallery();
+});
+
 // Options show text
 $("#options-text").click(function(){
 	if($(this).is(":checked")){
@@ -123,7 +128,7 @@ $(document).on("mouseleave", ".picbox", function(){
 
 // Auto-loader
 $('#gallery').on('scroll', function() {
-    if($(this).scrollTop() + $(this).innerHeight() >= (getMaxColumnHeight() * .80)) {
+    if($(this).scrollTop() + $(this).innerHeight() >= (getMaxColumnHeight() * .50)) {
         if (state.events == 1){
 			getItems();
 		}

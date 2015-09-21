@@ -26,7 +26,7 @@ function addSub(sub){
 		if (subs.indexOf(sub) == -1){
 			subs.push(sub);
 			addToSubList(sub);
-			createCookie('subsCookie', subs.join(','), 60);
+			createCookie('subsCookie', subs.join(','));
 			refreshSub();
 			$(".share-button-wrapper").show();
 			$(".share-result").hide();
@@ -49,10 +49,15 @@ function removeAll(){
 	refreshSub();
 }
 
+function editGallery(){
+	createCookie('subsCookie', subs.join(','));
+	window.location.href = "/";
+}
+
 function removeSub(sub){
 	var index = subs.indexOf(sub);
 	subs.splice(index,1);
-	createCookie('subsCookie', subs.join(','), 60);
+	createCookie('subsCookie', subs.join(','));
 	if (subs.length == 0){
 		eraseCookie('subsCookie');
 		$("#front-page-label").show();
