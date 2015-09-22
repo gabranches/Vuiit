@@ -60,6 +60,8 @@ label {
   padding: 15px;
 }
 
+#share-name,
+#share-link,
 #select-sort,
 #input-sub {
   max-width: 200px;
@@ -91,6 +93,7 @@ label {
 
 .share-load {
   display: none;
+  margin-left: 20px;
 }
 
 #update-loader, 
