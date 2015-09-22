@@ -45,7 +45,7 @@ def reddit_login():
 	return redirect(create_auth_url()) 
 
 @app.route('/loggedin')
-def load_mysubreddits():
+def login_redirect():
 	error = request.args.get('error', '')
 	if error:
 		return "Error: " + error
