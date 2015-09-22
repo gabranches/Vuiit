@@ -14,6 +14,7 @@ app.secret_key = SECRET_KEY
 
 @app.route('/')
 def index():
+	session.clear()
 	return render_template('index.html')
 
 @app.route('/r/<sub>')
@@ -51,7 +52,6 @@ def load_mysubreddits():
 		return "Error: " + error
 	code = request.args.get('code')
 	if session.get('token'):
-		session.clear()
 		return render_template('index.html')
 	else:
 		access_token = get_token(code)
