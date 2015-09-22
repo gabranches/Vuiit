@@ -92,6 +92,3 @@ def get_subscribed_subs(access_token):
 	for sub in data['data']['children']:
 		subs.append(str(sub['data']['display_name']))
 	return ",".join(subs).lower()
-
-
-
