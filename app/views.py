@@ -9,7 +9,6 @@ import requests
 import requests.auth
 import json
 
-
 app.secret_key = SECRET_KEY
 
 @app.route('/')
@@ -45,17 +44,18 @@ def share_page(key):
 def reddit_login():
 	return redirect(create_auth_url()) 
 
-@app.route('/mysubreddits')
+@app.route('/loggedin')
 def load_mysubreddits():
 	error = request.args.get('error', '')
 	if error:
 		return "Error: " + error
 	code = request.args.get('code')
-	if session.get('token'):
-		return render_template('index.html')
-	else:
-		access_token = get_token(code)
+	session['token'] = get_token(code)
+	return redirect("/mysubreddits")
 
+@app.route('/mysubreddits')
+def load_mysubreddits():
+	access_token = session.get('token')
 	return render_template('index.html', subs=get_subscribed_subs(access_token))
 
 def create_auth_url():
@@ -82,8 +82,7 @@ def get_token(code):
 								headers = { 'User-Agent' : 'image-viewer by /u/gabranches' }
 								)
 	token_json = response.json()
-	session['token'] = token_json["access_token"]
-	return session['token']
+	return token_json["access_token"]
 
 def get_subscribed_subs(access_token):
 	headers = {"Authorization": "bearer " + access_token, 'User-Agent' : 'image-viewer by /u/gabranches' }
