@@ -14,16 +14,12 @@ $("#input-sub").keypress(function (e) {
 
 // Add gallery name
 $("#update-button").click(function () {
-	var name = $("#share-name").val();
-	$("#update-button").hide();
-	$("#update-loader").show();
-	$.ajax({
-		url: "/ajax/updatename?name=" + name + "&key=" + state.key,
-		success: function(data){
-			$("#update-loader").hide();
-			$("#update-confirm").show();
-		}
-	});
+	addGalleryName();
+});
+$("#share-name").keypress(function (e) {
+	if (e.which == 13) {
+		addGalleryName();
+	}
 });
 
 // Remove all subs

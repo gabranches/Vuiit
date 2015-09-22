@@ -53,8 +53,6 @@ label {
 
 /* Left Menu */
 
-
-
 #left-menu {
   color: black;
   overflow-y: auto;
@@ -68,13 +66,18 @@ label {
 
 #edit-gallery,
 #remove-all {
-  color: #336699;
+  color: #C1552D;
   cursor: pointer;
 }
 
 .remove-button {
   display: none;
-  color: #ff4500;
+  color: #C1552D;
+  margin-left: 5px;
+}
+
+.remove-button:hover {
+  color: #843B20;
 }
 
 .share-result {
@@ -95,8 +98,12 @@ label {
   margin-left: 0px;
 }
 
-.sub-link {
+.sub-link:hover {
   color: #336699;
+}
+
+.sub-link {
+  color: #428bca;
 }
 
 #sub-list {

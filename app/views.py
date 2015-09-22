@@ -1,5 +1,6 @@
 from app import app, db
 from flask import render_template, request, redirect, session
+from config import CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, SECRET_KEY
 import url_shortener
 from app.models import Url
 import get_subs
@@ -8,10 +9,8 @@ import requests
 import requests.auth
 import json
 
-CLIENT_ID = "mGEGfnX8-v9_TQ"
-CLIENT_SECRET = "LHRakhCrm1KC1GNFx07q7VBhQIw"
-REDIRECT_URI = "http://127.0.0.1:5000/mysubreddits"
-app.secret_key = "asdfas9d87987asf09asdf78089as3,,3???"
+
+app.secret_key = SECRET_KEY
 
 @app.route('/')
 def index():

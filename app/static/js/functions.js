@@ -33,9 +33,22 @@ function addSub(sub){
 			$("#front-page-label").hide();
 		}
 		$("#input-sub").val('');
-		$("#input-sub").attr("placeholder","Enter a Subreddit");
+		$("#input-sub").attr("placeholder","Add a Subreddit");
 		$(".dropdown-menu").hide();
 	}
+}
+
+function addGalleryName(){
+	var name = $("#share-name").val();
+	$("#update-button").hide();
+	$("#update-loader").show();
+	$.ajax({
+		url: "/ajax/updatename?name=" + name + "&key=" + state.key,
+		success: function(data){
+			$("#update-loader").hide();
+			$("#update-confirm").show();
+		}
+	});
 }
 
 function removeAll(){

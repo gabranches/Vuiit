@@ -12,8 +12,8 @@
       <div class="row">
       	<!-- Top Menu (Mobile) -->
         <div id="top-menu" class="hidden-lg hidden-md col-xs-12 text-center affix-top">
-          <span id="options-enter">Tap To Edit Subreddits</span>
-          <span id="options-leave">Tap To Return To Gallery</span>
+          <span id="options-enter">Tap To edit subreddits</span>
+          <span id="options-leave">Tap To return To gallery</span>
         </div>
 				<!-- Left Menu -->
         <div id="left-menu" class="hidden-xs hidden-sm col-md-2 affix-top">
@@ -27,7 +27,7 @@
             </div>
 
             <div class="col-xs-12 mysubs-pg">
-              You are now logged in. <br /><br />
+              <strong>You are now logged in</strong><br />
               Browsing your subscribed subreddits
             </div>
 
@@ -36,13 +36,13 @@
             </div>
 
             <div class="col-xs-12 main-pg">
-              Enter a subreddit below and it will be added to the gallery</a>
+              Build and share a subreddit gallery</a>
             </div>
           </div>
 
           <div class="row main-pg">
             <div class="col-xs-12">
-              <input type="input" class="form-control" id="input-sub" placeholder="Enter a Subreddit">
+              <input type="input" class="form-control" id="input-sub" placeholder="Add a subreddit">
             </div>
           </div>
 
@@ -60,7 +60,7 @@
 
           <div class="row main-pg link-pg mysubs-pg">
              <div id="sub-list" class="col-xs-12">
-              <span id="active-subs-label"><label>Active Subreddits</label></span><br />
+              <span id="active-subs-label"><label>Active subreddits</label></span><br />
               <span id="front-page-label">Front Page</span>
               <span id="sub-names"></span>
              </div>
@@ -76,7 +76,7 @@
             </div>
 
             <div class="share-result menuitem col-xs-12">
-              <div id="gallery-label"><label> Gallery address: </label></div>
+              <div id="gallery-label"><label> Gallery address </label></div>
               <input type="text" class="form-control" id="share-link"><br />
               <input type="text" class="form-control" id="share-name" placeholder="Gallery name (optional)">
               <div class="menuitem col-xs-12 text-center update-button-wrapper">
@@ -86,6 +86,8 @@
               </div>
             </div>
           </div>
+
+
 
           <div class="row options">
             <div class="col-xs-12">
@@ -115,6 +117,13 @@
                 <label>
 				  				<input id="options-nsfw" type="checkbox"> Show NSFW posts
 								</label>
+              </div>
+
+              <div class="menuitem row link-pg main-pg sub-pg" id="login-div">
+                <div class="col-xs-12">
+                  <strong><a href="/login">Login with reddit</a></strong>
+                  to view your subscriptions
+                </div>
               </div>
 
               <div class="row" id="remove-all">
