@@ -40,6 +40,7 @@
             </div>
           </div>
 
+          <hr>
           <div class="row main-pg">
             <div class="col-xs-12">
               <input type="input" class="form-control" id="input-sub" placeholder="Add a subreddit">
@@ -60,15 +61,15 @@
 
           <div class="row main-pg link-pg mysubs-pg">
              <div id="sub-list" class="col-xs-12">
-              <span id="active-subs-label"><label>Active subreddits</label></span><br />
+              <div id="active-subs-label"><strong>Active subreddits</strong></div>
               <span id="front-page-label">Front Page</span>
               <span id="sub-names"></span>
              </div>
           </div>
           
           <div class="row main-pg">
-            <div class="menuitem col-xs-12 share-button-wrapper">
-              <button id="share" type="button" class="btn btn-default">Share this Gallery</button>
+            <div id="share" class="menuitem col-xs-12 share-button-wrapper">
+              <a><strong>Share this gallery</strong></a>
             </div>
 
             <div class="share-load menuitem col-xs-12">
@@ -76,18 +77,19 @@
             </div>
 
             <div class="share-result menuitem col-xs-12">
-              <div id="gallery-label"><label> Gallery address </label></div>
+              <hr>
               <input type="text" class="form-control" id="share-link"><br />
               <input type="text" class="form-control" id="share-name" placeholder="Gallery name (optional)">
+
               <div class="menuitem col-xs-12 update-button-wrapper">
-                <button id="update-button" type="button" class="btn btn-default">Update</button>
+                <!-- <button id="update-button" type="button" class="btn btn-default">Update</button> -->
                 <img id="update-loader" src='/static/images/ajax-loader.gif' />
                 <span id="update-confirm">Saved!</span>
               </div>
             </div>
           </div>
 
-
+          <hr>
 
           <div class="row options">
             <div class="col-xs-12">
@@ -115,10 +117,10 @@
 
               <div class="checkbox">
                 <label>
-				  				<input id="options-nsfw" type="checkbox"> Show NSFW posts
+				  				<input id="options-nsfw" type="checkbox"> Show nsfw posts
 								</label>
               </div>
-
+              <hr>
               <div class="menuitem row link-pg main-pg sub-pg" id="login-div">
                 <div class="col-xs-12">
                   <strong><a href="/login">Login with reddit</a></strong>
@@ -133,6 +135,7 @@
               </div>
             </div>
           </div>
+          <hr>
         </div>
         <!-- Main Gallery -->
         <div id="gallery" class="col-xs-12 col-md-10">

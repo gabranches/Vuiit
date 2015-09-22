@@ -46,7 +46,7 @@ function addGalleryName() {
 		url: '/ajax/updatename?name=' + name + '&key=' + state.key,
 		success: function(data){
 			$('#update-loader').hide();
-			$('#update-confirm').show();
+			$('#update-confirm').show().delay(3000).fadeOut();;
 		}
 	});
 }

@@ -29,7 +29,6 @@ $(document).on('click', '#remove-all', function() {
 
 // Show update button on change
 $('#share-name').focus(function() {
-	$('#update-confirm').hide();
 	$('#update-button').show();
 });
 

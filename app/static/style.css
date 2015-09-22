@@ -4,12 +4,24 @@ a:hover {
   text-decoration: none;
 }
 
+body {
+  background: rgba(239,247,255,1);
+  background: -moz-linear-gradient(top, rgba(239,247,255,1) 0%, rgba(255,255,255,1) 100%);
+  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(239,247,255,1)), color-stop(100%, rgba(255,255,255,1)));
+  background: -webkit-linear-gradient(top, rgba(239,247,255,1) 0%, rgba(255,255,255,1) 100%);
+  background: -o-linear-gradient(top, rgba(239,247,255,1) 0%, rgba(255,255,255,1) 100%);
+  background: -ms-linear-gradient(top, rgba(239,247,255,1) 0%, rgba(255,255,255,1) 100%);
+  background: linear-gradient(to bottom, rgba(239,247,255,1) 0%, rgba(255,255,255,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eff7ff', endColorstr='#ffffff', GradientType=0 );
+}
+
 html, body {
   overflow: hidden;
 }
 
 label {
   margin-bottom: 10px;
+  font-size: 13px;
 }
 
 .glyphicon {
@@ -29,6 +41,11 @@ label {
 .link-pg,
 .mysubs-pg {
   display:none;
+}
+
+.form-control {
+  height: 30px;
+  font-size: 13px;
 }
 
 /* Top Menu (Mobile) */
@@ -59,15 +76,19 @@ label {
   overflow-x: hidden;
   padding: 15px;
   padding: 25px;
+}
 
-  background: rgba(239,247,255,1);
-  background: -moz-linear-gradient(left, rgba(239,247,255,1) 0%, rgba(255,255,255,1) 100%);
-  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(239,247,255,1)), color-stop(100%, rgba(255,255,255,1)));
-  background: -webkit-linear-gradient(left, rgba(239,247,255,1) 0%, rgba(255,255,255,1) 100%);
-  background: -o-linear-gradient(left, rgba(239,247,255,1) 0%, rgba(255,255,255,1) 100%);
-  background: -ms-linear-gradient(left, rgba(239,247,255,1) 0%, rgba(255,255,255,1) 100%);
-  background: linear-gradient(to right, rgba(239,247,255,1) 0%, rgba(255,255,255,1) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eff7ff', endColorstr='#ffffff', GradientType=1 );
+#update-button {
+  margin-top: 20px;
+}
+
+.update-button-wrapper {
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+.share-button-wrapper {
+  cursor: pointer;
 }
 
 #share-name,
@@ -75,10 +96,6 @@ label {
 #select-sort,
 #input-sub {
   max-width: 200px;
-}
-
-.menuitem {
-  padding: 15px;
 }
 
 #edit-gallery,
@@ -122,11 +139,12 @@ label {
 
 .sub-link {
   color: #428bca;
+  padding-left: 10px;
 }
 
 #sub-list {
-  padding: 15px; 
-  padding-left: 50px;
+  padding: 15px;
+  /* padding-left: 0px; */
 }
 
 .options { 
@@ -134,11 +152,13 @@ label {
 }
 
 #active-subs-label {
-  margin-left: -20px;
+  margin-bottom: 10px;
 }
 
 #front-page-label {
-  display:none; 
+  display:none;
+  margin-left: 10px;
+  /* font-size:  13px; */
 }
 
 #gallery-name { 
