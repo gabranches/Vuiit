@@ -141,6 +141,7 @@ label {
 #gallery {
   overflow-y: auto;
   overflow-x: hidden;
+  background-color: white;
 }
 
 #gallery-label {
