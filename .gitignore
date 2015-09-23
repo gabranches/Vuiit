@@ -2,3 +2,5 @@ venv/
 *.pyc
 .DS_Store
 app/.DS_Store
+app/config.py
+setup.py
