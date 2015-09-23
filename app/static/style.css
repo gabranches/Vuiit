@@ -44,7 +44,6 @@ label {
 /* Top Menu (Mobile) */
 
 .menu-top {
-  margin-bottom:20px;
 }
 
 #options-leave {
@@ -58,6 +57,20 @@ label {
 }
 
 /* Left Menu */
+
+#logo {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 25px;
+}
+
+.tagline {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+}
+
+.input-wrapper {
+  margin-top: 20px;
+}
 
 #login-div {
   padding-left: 0px;

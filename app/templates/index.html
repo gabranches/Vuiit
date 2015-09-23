@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/static/style.css">
   </head>
   <body>
@@ -12,11 +13,12 @@
       <div class="row">
       	<!-- Top Menu (Mobile) -->
         <div id="top-menu" class="hidden-lg hidden-md col-xs-12 text-center affix-top">
-          <span id="options-enter">Tap To edit subreddits</span>
-          <span id="options-leave">Tap To return To gallery</span>
+          <span id="options-enter">Tap to edit subreddits</span>
+          <span id="options-leave">Tap to return To gallery</span>
         </div>
-				<!-- Left Menu -->
+        <!-- Left Menu -->
         <div id="left-menu" class="hidden-xs hidden-sm col-md-2 affix-top">
+          <div id="logo" class='text-left'>viewwit</div>
           <div class="row menu-top">
             <div class="col-xs-12 sub-pg">
               Browsing <strong>r/{{sub}}</strong>
@@ -33,16 +35,15 @@
 
             <div class="col-xs-12 sub-pg link-pg mysubs-pg">
               <a href="/">Back to main page</a>
+              <hr>
             </div>
 
             <div class="col-xs-12 main-pg">
-              Build and share a subreddit gallery</a>
+              <span class="tagline">Build and share subreddit galleries</span>
             </div>
 
           </div>
-          <hr>
-          <div class="row main-pg">
-          
+          <div class="row main-pg input-wrapper">
             <div class="col-xs-12">
               <input type="input" class="form-control" id="input-sub" placeholder="Add a subreddit">
             </div>
