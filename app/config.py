@@ -1,4 +1,7 @@
-CLIENT_ID = "mGEGfnX8-v9_TQ"
-CLIENT_SECRET = "LHRakhCrm1KC1GNFx07q7VBhQIw"
-REDIRECT_URI = "http://vuiit.com/loggedin"
-SECRET_KEY = "asdfas9d87987asf09asdf78089as3,,3???"
+import os
+
+CLIENT_ID = os.environ["VUIIT_CLIENT_ID"]
+CLIENT_SECRET = os.environ["VUIIT_CLIENT_SECRET"]
+REDIRECT_URI = os.environ["VUIIT_REDIRECT_URI"]
+SECRET_KEY = os.environ["VUIIT_SECRET_KEY"]
+SQLALCHEMY_DATABASE_URI = os.environ["VUIIT_SQLALCHEMY_URI"]

@@ -9,7 +9,7 @@ import requests
 import requests.auth
 import json
 
-app.secret_key = SECRET_KEY
+# app.secret_key = SECRET_KEY
 
 @app.route('/')
 def index():
