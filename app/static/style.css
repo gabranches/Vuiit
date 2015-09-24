@@ -85,6 +85,11 @@ label {
   border-left: 5px solid #eee;
 }
 
+.typeahead li {
+  font-size: 12px;
+  font-family: 'Helvetica', sans-serif;
+}
+
 #update-button {
   margin-top: 20px;
 }
