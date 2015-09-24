@@ -5,7 +5,7 @@ $(document).ready(function() {
 	options = {
 		sort:'hot',
 		limit: 80,
-		text_limit: 60,
+		text_limit: 300,
 		show_text: false,
 		show_nsfw: false
 	}
@@ -49,7 +49,7 @@ $(document).ready(function() {
 			addToSubList(subs[i]);
 		}
 		state.page = 'link';
-		state.gallery_name = '{{name}}'
+		state.gallery_name = '{{name}}';
 		$('#gallery-name').append(state.gallery_name);
 
 	{% else %}
