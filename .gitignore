@@ -4,3 +4,8 @@ venv/
 app/.DS_Store
 app/config.py
 setup.py
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
