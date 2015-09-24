@@ -72,7 +72,14 @@ label {
 }
 
 #contact {
+  position: absolute;
+  margin-bottom: 25px;
+  bottom: 0;
+  width: 100%;
+}
 
+#questions {
+  margin-bottom: 5px;
 }
 
 .input-wrapper {
