@@ -13,9 +13,10 @@ $('#input-sub').keypress(function (e) {
 });
 
 // Add gallery name
-$('#update-button').click(function () {
+$(document).on('focusout', '#share-name', function() {
 	addGalleryName();
 });
+
 $('#share-name').keypress(function (e) {
 	if (e.which == 13) {
 		addGalleryName();
