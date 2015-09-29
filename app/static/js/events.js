@@ -23,6 +23,33 @@ $('#share-name').keypress(function (e) {
 	}
 });
 
+// Show/Hide active subs list
+$(document).on('click', '#active-subs-label', function() {
+	if (state.active_subs == 1) {
+		$('#active-subs-arrow').attr('class', 'glyphicon glyphicon-triangle-right');
+		$('#sub-names').hide();
+		state.active_subs = 0;
+	} else {
+		$('#active-subs-arrow').attr('class', 'glyphicon glyphicon-triangle-bottom');
+		$('#sub-names').show();
+		state.active_subs = 1;
+	}
+});
+
+// Show/Hide popular subs list
+$(document).on('click', '#pop-subs-label', function() {
+	if (state.pop_subs == 1) {
+		$('#pop-subs-arrow').attr('class', 'glyphicon glyphicon-triangle-right');
+		$('#pop-sub-names').hide();
+		state.pop_subs = 0;
+	} else {
+		$('#pop-subs-arrow').attr('class', 'glyphicon glyphicon-triangle-bottom');
+		$('#pop-sub-names').show();
+		state.pop_subs = 1;
+	}
+});
+
+
 // Remove all subs
 $(document).on('click', '#remove-all', function() {
 	removeAll();
@@ -87,6 +114,13 @@ $(document).on('click', '.remove-button', function() {
 	}
 });
 
+// Add sub from popular list
+$(document).on('click', '.add-button', function() {
+	if (state.events == 1) {
+		addSub($(this).attr('sub-id'));
+	}
+});
+
 // Autocomplete
 $('#input-sub').typeahead({
 	onSelect: function(item) {
@@ -103,6 +137,16 @@ $(document).on('mouseenter', '.sub', function() {
 // Hide Remove button
 $(document).on('mouseleave', '.sub', function() { 	
 	$(this).find('.remove-button').hide();
+});
+
+// Show add button
+$(document).on('mouseenter', '.pop-sub', function() {  
+	$(this).find('.add-button').show();
+});
+
+// Hide add button
+$(document).on('mouseleave', '.pop-sub', function() { 	
+	$(this).find('.add-button').hide();
 });
 
 // Dropdown submit
@@ -123,7 +167,7 @@ $(document).on('mouseleave', '.picbox', function() {
 
 // Auto-loader
 $('#gallery').on('scroll', function() {
-    if($(this).scrollTop() + $(this).innerHeight() >= (getMaxColumnHeight() * .50)) {
+    if($(this).scrollTop() + $(this).innerHeight() >= (getMaxColumnHeight() * .60)) {
         if (state.events == 1){
 			getItems();
 		}

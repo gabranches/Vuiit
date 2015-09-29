@@ -22,6 +22,7 @@ function clearCols() {
 }
 
 function addSub(sub) {
+	sub = sub.toLowerCase();
 	if (state.events == 1){
 		if (subs.indexOf(sub) == -1){
 			subs.push(sub);
@@ -55,10 +56,11 @@ function removeAll() {
 	subs = [];
 	state.sub = '';
 	eraseCookie('subsCookie');
-	$('#front-page-label').show();
 	$('.share-button-wrapper').hide();
 	$('.share-result').hide();
 	$('#sub-names').empty();
+	$('#sub-names').html('<span id="front-page-label">Front Page</span>');
+	$('#front-page-label').show();
 	refreshSub();
 }
 
@@ -83,17 +85,33 @@ function removeSub(sub) {
 }
 
 function addToSubList(sub) {
+	sub = sub.toLowerCase();
 	if (state.page == 'main') {
 		$('#sub-names').append('<div sub-id="' +
 			sub + '" class="row sub"><span class="sub-link">r/' +
-			sub + '</span> <span class="remove-button" sub-id="' +
-			sub + '"><small>[remove]</small></span></div>');
+			sub + '</span><span class="remove-button glyphicon glyphicon-minus" sub-id="' +
+			sub + '" title="remove this subreddit"></span></div>');
 	} else {
 		$('#sub-names').append('<div sub-id="' +
 			sub + '" class="row sub"><span class="sub-link">r/' +
 			sub + '</span></div>');
 	}
 	$('.share-button-wrapper').show();
+}
+
+function addToPopularList(sub) {
+	$('#pop-sub-names').append('<div sub-id="' +
+		sub + '" class="row pop-sub"><span class="sub-link">r/' +
+		sub + '</span><span class="add-button glyphicon glyphicon-plus" sub-id="' +
+		sub + '" title="add this subreddit"></span></div>');
+}
+
+function getPopularSubs() {
+	$.getJSON("https://www.reddit.com/subreddits/popular/.json?limit=100", function(data) {
+		$.each(data.data.children,function(index,element) { 
+			addToPopularList(element.data.display_name.toLowerCase());
+		});
+	});
 }
 
 function getItems() {

@@ -35,6 +35,14 @@ label {
   margin-left: 5px;
 }
 
+.infotext {
+  font-size: 12px;
+}
+
+.glyphicon {
+  margin-right:5px;
+}
+
 .main-pg, 
 .sub-pg, 
 .link-pg,
@@ -72,7 +80,6 @@ label {
 }
 
 #contact {
-  margin-top: 50px;
   margin-left: 15px;
 }
 
@@ -145,7 +152,13 @@ label {
 .remove-button {
   display: none;
   color: #C1552D;
-  margin-left: 3px;
+  margin-left: 5px;
+}
+
+.add-button {
+  display: none;
+  color: #1CA71C;
+  margin-left: 5px;
 }
 
 .remove-button:hover {
@@ -169,6 +182,13 @@ label {
 .sub {
   cursor: pointer;
   margin-left: 0px;
+  padding-left: 30px;
+}
+
+.pop-sub {
+  cursor: pointer;
+  margin-left: 0px;
+  padding-left: 30px;
 }
 
 .sub-link:hover {
@@ -177,12 +197,20 @@ label {
 
 .sub-link {
   color: #428bca;
-  padding-left: 10px;
 }
 
 #sub-list {
   padding: 15px;
   /* padding-left: 0px; */
+}
+
+#pop-sub-list {
+  padding: 15px;
+  margin-left: 15px;
+}
+
+#pop-sub-names {
+  display: none;
 }
 
 .options { 
@@ -192,11 +220,18 @@ label {
 #active-subs-label {
   margin-bottom: 10px;
   font-size: 13px;
+  cursor: pointer;
+}
+
+#pop-subs-label {
+  margin-bottom: 10px;
+  font-size: 13px;
+  cursor: pointer;
 }
 
 #front-page-label {
   display:none;
-  margin-left: 10px;
+  margin-left: 30px;
   /* font-size:  13px; */
 }
 
